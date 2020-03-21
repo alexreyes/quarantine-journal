@@ -82,6 +82,9 @@
         <slot>
             {#if fileName}
                 <p class="smallFileInfo">Filename: {fileName}</p>
+                <br>
+                <br>
+
                 <p class="smallFileInfo">Address: {walletAddress}</p>
                 <p class="smallFileInfo">Balance: {arBalance}</p>
 
