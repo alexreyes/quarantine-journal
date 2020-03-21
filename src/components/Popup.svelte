@@ -1,7 +1,9 @@
 <script> 
     import { onMount } from "svelte";
     export let fileName;
-    
+    export let arBalance; 
+    export let walletAddress; 
+
     const init = () => console.log("dropzone init ! 😍");
     const addedfile = file => {
         fileName = file.name;
@@ -30,25 +32,22 @@
 
                 arweave.wallets.jwkToAddress(wallet).then((address) => {
                     console.log(`Arweave wallet address: ${address}`)
-
+                    walletAddress = address;
                     // document.getElementById("login").textContent = "Logged In";
                     
                     arweave.wallets.getBalance(address).then((balance) => {
                         let winston = balance;
-                        let ar = arweave.ar.winstonToAr(balance);
+                        arBalance = arweave.ar.winstonToAr(balance);
 
                         console.log(winston);
 
-                        console.log(ar);
-
-                        // document.getElementById("dropzone").innerHTML = address + "<br><b>Balance:</b> " + ar + " <b>AR Tokens</b>";
+                        console.log(arBalance);
                     });
                 });
 
             } catch (err) {
                 console.log('Error logging in: ', err);
             }
-            // console.log(ev.target.result, JSON.parse(fr.result))
         };
 
         fr.readAsText(files);
@@ -81,11 +80,15 @@
         {hooveringClass}
         {id}>
         <slot>
-            <p class="dropzoneDefaultSentence">
-                Add keyfile to log in
-            </p>
             {#if fileName}
-                <p class="smallFileInfo">{fileName}</p>
+                <p class="smallFileInfo">Filename: {fileName}</p>
+                <p class="smallFileInfo">Address: {walletAddress}</p>
+                <p class="smallFileInfo">Balance: {arBalance}</p>
+
+                {:else}
+                    <p class="dropzoneDefaultSentence">
+                        Add keyfile to log in
+                    </p>
             {/if}
         </slot>
     </svelte:component>
