@@ -3,6 +3,7 @@
     export let fileName;
     export let arBalance; 
     export let walletAddress; 
+    export let loginStatus = "Log in";
 
     const init = () => console.log("dropzone init ! 😍");
     const addedfile = file => {
@@ -33,8 +34,10 @@
                 arweave.wallets.jwkToAddress(wallet).then((address) => {
                     console.log(`Arweave wallet address: ${address}`)
                     walletAddress = address;
-                    // document.getElementById("login").textContent = "Logged In";
                     
+                    // document.getElementById("login").textContent = "Logged In";
+                    loginStatus = "Logged in"; 
+
                     arweave.wallets.getBalance(address).then((balance) => {
                         let winston = balance;
                         arBalance = arweave.ar.winstonToAr(balance);
@@ -63,7 +66,8 @@
         font-size: 30px;
     }
     p.smallFileInfo {
-        font-size:10px;
+        font-size:20px;
+        text-align: left;
     }
 </style>
 
@@ -79,12 +83,9 @@
         {dropzoneClass}
         {hooveringClass}
         {id}>
-        <slot>
+        <div>
             {#if fileName}
-                <p class="smallFileInfo">Filename: {fileName}</p>
-                <br>
-                <br>
-
+                <p class="smallFileInfo"><b>Filename:</b> {fileName}</p>
                 <p class="smallFileInfo">Address: {walletAddress}</p>
                 <p class="smallFileInfo">Balance: {arBalance}</p>
 
@@ -93,6 +94,6 @@
                         Add keyfile to log in
                     </p>
             {/if}
-        </slot>
+        </div>
     </svelte:component>
 </content>

@@ -3,7 +3,7 @@
 	import Add from './Add.svelte'; 
 	import Content from '../components/Content.svelte';
 	import Modal from '../components/Modal.svelte';	
-	  
+	
 	let posts = [];
 	
 </script>
