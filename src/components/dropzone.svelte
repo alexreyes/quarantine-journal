@@ -55,7 +55,7 @@
     border: 2px dashed #ff3e00;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     transition: all 300ms ease-out;
   }
 
