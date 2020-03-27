@@ -46,12 +46,23 @@
 
             await arweave.transactions.sign(transaction, key);
             const response = await arweave.transactions.post(transaction);
-            // console.log(response.status);
+            console.log("Status: ", response.status);
             // console.log(transaction.id);
             // console.log(transaction.data);
             await arweave.transactions.post(transaction);
-            alert('Note saved to blockchain!');
 
+            if (response.status === 200) {
+                alert('Note saved to blockchain!');
+            }
+            if (response.status == 400) {
+                alert("400: The transaction is invalid, couldn't be verified, or the wallet does not have suffucuent funds.")
+            }
+            if (response.status == 429) {
+                alert("429: The request has exceeded the clients rate limit quota.")
+            }
+            if (response.status == 503) {
+                alert("503: The nodes was unable to verify the transaction.")
+            }
         })()
     }
 </script>
@@ -67,10 +78,6 @@
 
     button {
         margin-top: 1em;
-    }
-
-    .dangerAlert {
-        margin:1em;
     }
 
 </style>

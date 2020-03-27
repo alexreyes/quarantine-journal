@@ -1,14 +1,19 @@
   
 <script>
 	export let segment;
+	import Modal from './Modal.svelte';
 	import { loggedIn, storedWalletAddress, storedWalletBalance, arweaveWallet } from '../components/userContext.js';
-	    
+	import { fly } from 'svelte/transition';	
+    import Popup from './Popup.svelte';
+	import {getContext} from 'svelte';
+
     function logOut() {
         loggedIn.set("log in");
         storedWalletAddress.set('wallet address');
         storedWalletBalance.set('wallet balance');
         arweaveWallet.set('wallet');
-    }
+	}
+
 </script>
 
 <style>
@@ -65,10 +70,6 @@
 		
 		{#if $loggedIn === "log out"}
 			<li><a aria-current='{segment === "new" ? "page" : undefined}' class="text-decoration-none new" href='new'>new</a></li>
-		{/if}
-
-		{#if $loggedIn === "log in"}
-			<li><a aria-current='{segment === "undefined" ? "page" : undefined}' class="text-decoration-none login" style="right"href='.'>{$loggedIn}</a></li>
 		{/if}
 
 		{#if $loggedIn === "log out"}
