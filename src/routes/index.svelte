@@ -2,9 +2,9 @@
 	import Box from './Box.svelte'; 
 	import Content from '../components/Content.svelte';
 	import Modal from '../components/Modal.svelte';	
-	import { arweaveWallet, storedWalletAddress} from '../components/userContext.js';
+	import { loggedIn, arweaveWallet, storedWalletAddress} from '../components/userContext.js';
     import { and, or, equals } from 'arql-ops';
-
+	
 	let posts = []; 
 
 	// post sample data: 
@@ -12,6 +12,7 @@
 	// 	title : 'hello',
 	// 	description: 'world'
 	// };
+	$: $loggedIn && getPosts();
 
 	function getPosts() {
 		(async () => {
@@ -27,14 +28,12 @@
 			);
 					
 			const results = await arweave.arql(myQuery);
-			console.log(results); 
 
 			for (var count = 0; count < results.length; count++) {
 												
 				const blockchainTransaction = arweave.transactions.get(results[count]).then(blockchainTransaction => {
 
 					let returnedJson = blockchainTransaction.get('data', {decode: true, string: true});
-					console.log(returnedJson); 
 
 					try {
 						posts = posts.concat(JSON.parse(returnedJson)); // add returned posts to the view
@@ -46,7 +45,6 @@
 					blockchainTransaction.get('tags').forEach(tag => {
 						let key = tag.get('name', {decode: true, string: true});
 						let value = tag.get('value', {decode: true, string: true});
-						console.log(`${key} : ${value}`);
 					});
 
 				});
@@ -85,24 +83,25 @@
 <main>
 	<h1>Quarantine Notes</h1>
 	<section>
-	{#if posts.length === 0}
-		<p>
-		Start by adding your first post! 
-		</p>
+	{#if $loggedIn === "log out"}
+		{#if posts.length === 0}
+			<p>
+			You don't have any posts yet! Click new to write a new post.
+			</p>
+			{:else}
+			{#each posts as post}
+				<Box
+				postTitle={post.title} 
+				postDescription={post.description}
+				/>
+			{/each}
+		{/if}
 		{:else}
-		{#each posts as post}
-			<Box
-			postTitle={post.title} 
-			postDescription={post.description}
-			/>
-		{/each}
+			<p>Please log in to view your posts. Don't have an arweave wallet? Get one <a href="ht	tps://www.arweave.org/wallet">here</a></p>
 	{/if}
-
 </section>
 </main>
 
 <Modal> 
 	<Content/>
 </Modal>
-
-<button on:click="{getPosts}">get posts</button>

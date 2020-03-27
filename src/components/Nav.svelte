@@ -1,6 +1,14 @@
   
 <script>
 	export let segment;
+	import { loggedIn, storedWalletAddress, storedWalletBalance, arweaveWallet } from '../components/userContext.js';
+	    
+    function logOut() {
+        loggedIn.set("log in");
+        storedWalletAddress.set('wallet address');
+        storedWalletBalance.set('wallet balance');
+        arweaveWallet.set('wallet');
+    }
 </script>
 
 <style>
@@ -21,6 +29,12 @@
 	}
 	li {
 		display: block;
+		
+	}
+	.login {
+		float: right;
+	} 
+	.home, .new {
 		float: left;
 	}
 	[aria-current] {
@@ -41,11 +55,24 @@
 		padding: 1em 0.5em;
 		display: block;
 	}
+
 </style>
 
 <nav>
 	<ul>
-		<li><a aria-current='{segment === undefined ? "page" : undefined}' href='.'>home</a></li>
-		<li><a aria-current='{segment === "new" ? "page" : undefined}' href='new'>new</a></li>
+		<li><a aria-current='{segment === undefined ? "page" : undefined}' href='.' class="text-decoration-none home" >home</a></li>
+		<li><a aria-current='{segment === "about" ? "page" : undefined}' class="text-decoration-none new" href='about'>about</a></li>
+		
+		{#if $loggedIn === "log out"}
+			<li><a aria-current='{segment === "new" ? "page" : undefined}' class="text-decoration-none new" href='new'>new</a></li>
+		{/if}
+
+		{#if $loggedIn === "log in"}
+			<li><a aria-current='{segment === "undefined" ? "page" : undefined}' class="text-decoration-none login" style="right"href='.'>{$loggedIn}</a></li>
+		{/if}
+
+		{#if $loggedIn === "log out"}
+			<li><a aria-current='{segment === "undefined" ? "page" : undefined}' class="text-decoration-none login" style="right"href='.' on:click="{logOut}">{$loggedIn}</a></li>
+		{/if}
 	</ul>
 </nav>

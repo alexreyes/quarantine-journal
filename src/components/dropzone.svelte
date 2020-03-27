@@ -52,16 +52,18 @@
     height: 300px;
     background: #fdfdfd;
     border-radius: 5px;
-    border: 2px dashed #ff3e00;
+    border: 2px dashed #0275d8;
     display: flex;
     justify-content: center;
     /* align-items: center; */
     transition: all 300ms ease-out;
+    padding: 2em;
   }
 
   .dropzone.dropzone-hoovering {
-    border: 2px solid #ff3e00;
-    background: rgba(255, 62, 0, 0.05);
+    border: 2px solid #0275d8;
+    background: #D3D3D3;
+    opacity: .5;
   }
 </style>
 
