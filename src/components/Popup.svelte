@@ -1,11 +1,11 @@
     <script> 
         import { onMount } from "svelte";
-        import { loggedIn, storedWalletAddress, storedWalletBalance } from './userContext.js';
+        import { loggedIn, storedWalletAddress, storedWalletBalance, arweaveWallet } from './userContext.js';
 
         export let fileName;
         export let arBalance; 
         export let walletAddress; 
-
+        
         const init = () => console.log("dropzone init ! 😍");
         const addedfile = file => {
             fileName = file.name;
@@ -31,6 +31,8 @@
                     const arweave = Arweave.init();
 
                     let wallet = JSON.parse(ev.target.result);
+                    arweaveWallet.set(wallet);
+                    console.log(wallet);
 
                     arweave.wallets.jwkToAddress(wallet).then((address) => {
                         console.log(`Arweave wallet address: ${address}`)
