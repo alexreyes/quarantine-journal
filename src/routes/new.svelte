@@ -22,41 +22,41 @@
 
 	function saveToBlockchain(post)
     {
-        // const arweave = Arweave.init();
+        const arweave = Arweave.init();
         
-        // let key = $arweaveWallet; 
-        // (async () => {
-        //     arweave.wallets.jwkToAddress(key).then((address) => {
-        //         arweave.wallets.getBalance(address).then((balance) => {
-        //             let winston = balance;
-        //         });
-        //     });
-        //     let transaction = await arweave.createTransaction({
-        //         data: JSON.stringify(post),
-        //     }, key);
-        //     transaction.addTag('App-Name', 'QuarantineNotes')
-        //     transaction.addTag('App-Version', '0.0.1')
-        //     transaction.addTag('TestData', 'false')
-        //     // transaction.addTag('Unix-Time', unixTime)
-        //     await arweave.transactions.sign(transaction, key);
-        //     const response = await arweave.transactions.post(transaction);
-        //     console.log("Status: ", response.status);
-        //     // console.log(transaction.id);
-        //     // console.log(transaction.data);
-        //     await arweave.transactions.post(transaction);
-        //     if (response.status === 200) {
-        //         alert('Note saved to blockchain!');
-        //     }
-        //     if (response.status == 400) {
-        //         alert("400: The transaction is invalid, couldn't be verified, or the wallet does not have suffucuent funds.")
-        //     }
-        //     if (response.status == 429) {
-        //         alert("429: The request has exceeded the clients rate limit quota.")
-        //     }
-        //     if (response.status == 503) {
-        //         alert("503: The nodes was unable to verify the transaction.")
-        //     }
-        // })()
+        let key = $arweaveWallet; 
+        (async () => {
+            arweave.wallets.jwkToAddress(key).then((address) => {
+                arweave.wallets.getBalance(address).then((balance) => {
+                    let winston = balance;
+                });
+            });
+            let transaction = await arweave.createTransaction({
+                data: JSON.stringify(post),
+            }, key);
+            transaction.addTag('App-Name', 'QuarantineNotes')
+            transaction.addTag('App-Version', '0.0.1')
+            transaction.addTag('TestData', 'false')
+            // transaction.addTag('Unix-Time', unixTime)
+            await arweave.transactions.sign(transaction, key);
+            const response = await arweave.transactions.post(transaction);
+            console.log("Status: ", response.status);
+            // console.log(transaction.id);
+            // console.log(transaction.data);
+            await arweave.transactions.post(transaction);
+            if (response.status === 200) {
+                alert('Note saved to blockchain!');
+            }
+            if (response.status == 400) {
+                alert("400: The transaction is invalid, couldn't be verified, or the wallet does not have suffucuent funds.")
+            }
+            if (response.status == 429) {
+                alert("429: The request has exceeded the clients rate limit quota.")
+            }
+            if (response.status == 503) {
+                alert("503: The nodes was unable to verify the transaction.")
+            }
+        })()
     }
 </script>
 <style>
