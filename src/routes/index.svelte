@@ -12,44 +12,45 @@
 	// 	title : 'hello',
 	// 	description: 'world'
 	// };
-	$: $loggedIn && getPosts();
+	// $: $loggedIn && getPosts();
 
 	function getPosts() {
-		(async () => {
-			const arweave = Arweave.init();
+		try {
+			(async () => {
+				const arweave = Arweave.init();
 
-			const myQuery = and(
-				equals('from', $storedWalletAddress),
-				equals('App-Name', 'QuarantineNotes'),
-				equals('TestData', 'false'),
-				or(
-					equals('App-Version', '0.0.1'),
-				)
-			);
-					
-			const results = await arweave.arql(myQuery);
-
-			for (var count = 0; count < results.length; count++) {
-												
-				const blockchainTransaction = arweave.transactions.get(results[count]).then(blockchainTransaction => {
-
-					let returnedJson = blockchainTransaction.get('data', {decode: true, string: true});
-
-					try {
-						posts = posts.concat(JSON.parse(returnedJson)); // add returned posts to the view
+				const myQuery = and(
+					equals('from', $storedWalletAddress),
+					equals('App-Name', 'QuarantineNotes'),
+					equals('TestData', 'false'),
+					or(
+						equals('App-Version', '0.0.1'),
+					)
+				);
 						
-					} catch (ex) {
-						console.error(ex);
-					}
-					// Get tags
-					blockchainTransaction.get('tags').forEach(tag => {
-						let key = tag.get('name', {decode: true, string: true});
-						let value = tag.get('value', {decode: true, string: true});
-					});
+				const results = await arweave.arql(myQuery);
 
-				});
-			}
-        })()
+				for (var count = 0; count < results.length; count++) {
+													
+					const blockchainTransaction = arweave.transactions.get(results[count]).then(blockchainTransaction => {
+
+						let returnedJson = blockchainTransaction.get('data', {decode: true, string: true});
+
+						posts = posts.concat(JSON.parse(returnedJson)); // add returned posts to the view
+							
+						// Get tags
+						blockchainTransaction.get('tags').forEach(tag => {
+							let key = tag.get('name', {decode: true, string: true});
+							let value = tag.get('value', {decode: true, string: true});
+						});
+
+					});
+				}
+			})()
+		}
+		catch (exception) {
+			console.log("getting posts error: ", exception); 
+		}
 	}
 </script>
 
@@ -110,3 +111,4 @@
 <Modal>
 	<Content/>
 </Modal>
+<button on:click={getPosts}>get posts</button>

@@ -65,7 +65,7 @@
 
 <nav>
 	<ul>
-		<li><a aria-current='{segment === undefined ? "page" : undefined}' href='.' class="text-decoration-none home" >home</a></li>
+		<li><a aria-current='{segment === "" ? "page" : undefined}' class="text-decoration-none home" href='.' >home</a></li>
 		<li><a aria-current='{segment === "about" ? "page" : undefined}' class="text-decoration-none new" href='about'>about</a></li>
 		
 		{#if $loggedIn === "log out"}
