@@ -103,7 +103,7 @@
 			{/each}
 		{/if}
 		{:else}
-			<p>Please log in to view your posts. Don't have an arweave wallet? Get one <a href="ht	tps://www.arweave.org/wallet">here</a></p>
+			<p>Please log in to view your posts. Don't have an arweave wallet? Get one <a href="https://www.arweave.org/wallet">here</a></p>
 	{/if}
 </section>
 </main>
