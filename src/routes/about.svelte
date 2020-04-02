@@ -2,11 +2,9 @@
 	
 </script>
 <style>
-
     h1 {
         padding-bottom: 0.2em;
     }
-
 </style>
 <svelte:head>
     <title>New post</title>
@@ -25,3 +23,6 @@
 <p>Since this project uses the arweave blockchain to store posts, all posts which are made on this site are public and viewable by anyone. They will be on the blockchain permanently or at least as long as the arweave project continues. </p>
 
 <p>This project is free, and always will be. If you don’t already have an arweave wallet, you can claim one <a href="https://www.arweave.org/wallet" target="_blank"s>here.</a></p>
+<br>
+<br>    
+<p>P.S Quarantine Notes is <a href="https://github.com/alexreyes/perma-quarantine-notes-web">open source!</a></p>

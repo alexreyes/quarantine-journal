@@ -3,7 +3,7 @@
 	export let segment;
 	import { storedWalletAddress, storedWalletBalance, arweaveWallet } from './userContext.js';
 	import { fly } from 'svelte/transition';	
-	import {getContext} from 'svelte';
+	import { getContext } from 'svelte';
 </script>
 
 <style>

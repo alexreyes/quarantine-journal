@@ -4,6 +4,7 @@
     export let postDate; 
     export let postName; 
     export let postLink; 
+    export let postLocation; 
 </script>
 <style>
 	.box {
@@ -22,10 +23,12 @@
     }
 </style>
 
+<head>
+</head>
 <div class="box">
     <slot></slot>
     <h1> {postTitle} </h1>
-    <p class="date"> Date: {postDate}</p>
+    <p class="date">{postLocation} on {postDate}</p>
     {#if postLink}   
         <p>By: <a href = {postLink} target="_blank" >{postName}</a></p>
         {:else}
