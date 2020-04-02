@@ -1,7 +1,7 @@
 <script>
     import { fly } from 'svelte/transition';	
     import {getContext} from 'svelte';
-	import { loggedIn, storedWalletAddress, storedWalletBalance, arweaveWallet} from './userContext.js';
+	import { storedWalletAddress, storedWalletBalance, arweaveWallet} from './userContext.js';
     import privateKey from './main-keyfile.json'
     import { onMount } from 'svelte';
     import { and, or, equals } from 'arql-ops';
@@ -25,8 +25,7 @@
 
             arweave.wallets.jwkToAddress(wallet).then((address) => {
                 let walletAddress = address;
-                
-                loggedIn.set("log out"); 
+            
                 storedWalletAddress.set(walletAddress);
 
                 arweave.wallets.getBalance(address).then((balance) => {
@@ -113,25 +112,15 @@
 <main>
 	<h1>Quarantine Notes</h1>
 	<section>
-	{#if $loggedIn === "log out"}
-		{#if posts.length === 0}
-			<p>
-			You don't have any posts yet! Click new to write a new post.
-			</p>
-			{:else}
-			{#each posts as post}
-				<Box
-				postTitle={post.title} 
-				postName={post.name}
-				postLink={post.socialLink}
-				postDate={post.currDate}
-				postDescription={post.description}
-				/>
-			{/each}
-		{/if}
-		{:else}
-			<p>Please log in to view your posts. Don't have an arweave wallet? Get one <a href="https://www.arweave.org/wallet">here</a></p>
-	{/if}
+        {#each posts as post}
+            <Box
+            postTitle={post.title} 
+            postName={post.name}
+            postLink={post.socialLink}
+            postDate={post.currDate}
+            postDescription={post.description}
+            />
+        {/each}
 </section>
 </main>
 

@@ -1,5 +1,5 @@
 <script>
-	import { arweaveWallet, storedWalletAddress, loggedIn} from '../components/userContext.js';
+	import { arweaveWallet, storedWalletAddress} from '../components/userContext.js';
 
 	let title = ''; 
     let description = ''; 
@@ -112,40 +112,32 @@
 
 <h1>new post</h1>
 
-{#if $loggedIn === "log in"}
-    <div class="alert alert-danger" role="alert">
-        You need to log in before submitting a post!
+<div class="alert alert-info" role="alert">
+    Note: All posts stored on the <a href="https://www.arweave.org/" target="_blank" class="alert-link">arweave blockchain</a> are permanent, un-editable, un-deleteable, and public. 
+</div>
+
+<section>
+    <div class = "theTitle"> 
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" bind:value={title} placeholder="Enter a title"/> 
     </div>
 
-    {:else}
-        <div class="alert alert-info" role="alert">
-            Note: All posts stored on the <a href="https://www.arweave.org/" target="_blank" class="alert-link">arweave blockchain</a> are permanent, un-editable, un-deleteable, and public. 
-        </div>
+    <div class = "theName"> 
+        <label for="title">Name</label>
+        <input type="text" class="form-control" id="name" bind:value={name} placeholder="Who wrote this?"/> 
+    </div>
 
-        <section>
-            <div class = "theTitle"> 
-                <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" bind:value={title} placeholder="Enter a title"/> 
-            </div>
+    <div class = "socialLink"> 
+        <label for="title">Link</label>
+        <input type="text" class="form-control" id="socialLink" bind:value={socialLink} placeholder="Link to your social! (optional)"/> 
+    </div>
 
-            <div class = "theName"> 
-                <label for="title">Name</label>
-                <input type="text" class="form-control" id="name" bind:value={name} placeholder="Who wrote this?"/> 
-            </div>
-
-            <div class = "socialLink"> 
-                <label for="title">Link</label>
-                <input type="text" class="form-control" id="socialLink" bind:value={socialLink} placeholder="Link to your social! (optional)"/> 
-            </div>
-
-            <div class="theDesc">
-                <label for="description">Description</label>
-                <textarea rows="3" class="form-control" id="description" bind:value ={description}  placeholder="Write the body of your post!"/>
-            </div>
-            
-            <button type="button" class="btn btn-outline-primary" on:click={addPost}>Submit post</button>
-            
-    </section>
-
-{/if}
+    <div class="theDesc">
+        <label for="description">Description</label>
+        <textarea rows="3" class="form-control" id="description" bind:value ={description}  placeholder="Write the body of your post!"/>
+    </div>
+    
+    <button type="button" class="btn btn-outline-primary" on:click={addPost}>Submit post</button>
+    
+</section>
 
