@@ -86,7 +86,6 @@
     }
 </script>
 <style>
-
     h1 {
         padding-bottom: 0.2em;
     }
@@ -104,7 +103,6 @@
     button {
         margin-top: 1em;
     }
-
 </style>
 <svelte:head>
     <title>New post</title>
@@ -125,7 +123,6 @@
         </div>
 
         <section>
-
             <div class = "theTitle"> 
                 <label for="title">Title</label>
                 <input type="text" class="form-control" id="title" bind:value={title} placeholder="Enter a title"/> 
