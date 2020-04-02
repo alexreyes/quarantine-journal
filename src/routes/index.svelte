@@ -23,6 +23,7 @@
 					equals('from', $storedWalletAddress),
 					equals('App-Name', 'QuarantineNotes'),
 					equals('TestData', 'false'),
+					equals('production', 'true'),
 					or(
 						equals('App-Version', '0.0.1'),
 					)
@@ -98,6 +99,9 @@
 			{#each posts as post}
 				<Box
 				postTitle={post.title} 
+				postName={post.name}
+				postLink={post.socialLink}
+				postDate={post.currDate}
 				postDescription={post.description}
 				/>
 			{/each}

@@ -4,20 +4,36 @@
 	let title = ''; 
     let description = ''; 
     let posts = []; 
+    let currDate = '';
 	let newPost = {};
-	
-    function setTitle(event){
-		title = event.target.value;
-    }
+    let socialLink = '';
+    let name = ''; 
     
     function addPost(){
+        var date = new Date();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        
+        currDate = (date.getMonth()+1) + '/' + date.getDate() + '/'+ date.getFullYear() + ' @ ' + hours + ':' + minutes + ' ' + ampm;
+        
+        console.log('Posted @: ', currDate);
 		const newPost = {
-			title : title,
-			description: description
+            title : title,
+            name: name, 
+            socialLink: socialLink,
+            description: description,
+            currDate: currDate
 		};
         saveToBlockchain(newPost);
         title = ''; 
         description = ''; 
+        socialLink = ''; 
+        name = ''; 
 	}
 
 	function saveToBlockchain(post)
@@ -26,6 +42,9 @@
         
         let key = $arweaveWallet; 
         (async () => {
+
+            var unixTime = Math.round((new Date()).getTime() / 1000)
+
             arweave.wallets.jwkToAddress(key).then((address) => {
                 arweave.wallets.getBalance(address).then((balance) => {
                     let winston = balance;
@@ -37,9 +56,12 @@
             transaction.addTag('App-Name', 'QuarantineNotes')
             transaction.addTag('App-Version', '0.0.1')
             transaction.addTag('TestData', 'false')
-            // transaction.addTag('Unix-Time', unixTime)
+            transaction.addTag('production', 'true')
+            transaction.addTag('Unix-Time', unixTime)
+
             await arweave.transactions.sign(transaction, key);
             const response = await arweave.transactions.post(transaction);
+            
             console.log("Status: ", response.status);
             // console.log(transaction.id);
             // console.log(transaction.data);
@@ -69,6 +91,12 @@
         padding-top: 1em; 
     }
 
+    .theName {
+        padding-top: 1em; 
+    }
+    .socialLink {
+        padding-top: 1em; 
+    }
     button {
         margin-top: 1em;
     }
@@ -78,13 +106,9 @@
     <title>New post</title>
     <script src="https://unpkg.com/arweave/bundles/web.bundle.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
 </svelte:head>
 
 <h1>new post</h1>
-
-
-
 
 {#if $loggedIn === "log in"}
     <div class="alert alert-danger" role="alert">
@@ -97,18 +121,30 @@
         </div>
 
         <section>
-        <div class = "theTitle"> 
-            <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" bind:value={title} placeholder="Enter a title"/> 
-        </div>
 
-        <div class="theDesc">
-            <label for="description">Description</label>
-            <textarea rows="3" class="form-control" id="description" bind:value ={description}  placeholder="Write the body of your post!"/>
-        </div>
-        <button type="button" class="btn btn-outline-primary" on:click={addPost}>Submit post</button>
-        
-</section>
+            <div class = "theTitle"> 
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" bind:value={title} placeholder="Enter a title"/> 
+            </div>
+
+            <div class = "theName"> 
+                <label for="title">Name</label>
+                <input type="text" class="form-control" id="name" bind:value={name} placeholder="Who wrote this?"/> 
+            </div>
+
+            <div class = "socialLink"> 
+                <label for="title">Link</label>
+                <input type="text" class="form-control" id="socialLink" bind:value={socialLink} placeholder="Link to your social! (optional)"/> 
+            </div>
+
+            <div class="theDesc">
+                <label for="description">Description</label>
+                <textarea rows="3" class="form-control" id="description" bind:value ={description}  placeholder="Write the body of your post!"/>
+            </div>
+            
+            <button type="button" class="btn btn-outline-primary" on:click={addPost}>Submit post</button>
+            
+    </section>
 
 {/if}
 

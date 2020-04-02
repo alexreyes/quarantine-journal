@@ -1,6 +1,9 @@
 <script>
     export let postTitle;
     export let postDescription;
+    export let postDate; 
+    export let postName; 
+    export let postLink; 
 </script>
 <style>
 	.box {
@@ -14,10 +17,23 @@
         margin: 0 auto;
         margin-bottom: 30px; 
 	}
+    .date {
+        color: #808080; 
+    }
 </style>
 
 <div class="box">
-	<slot></slot>
+    <slot></slot>
     <h1> {postTitle} </h1>
+    <p class="date"> Date: {postDate}</p>
+    {#if postLink}
+        
+        <p>By: <a href = {postLink} target="_blank" >{postName}</a></p>
+        
+        {:else}
+            <p>By: {postName}</p>
+
+    {/if}
+
     <p> {postDescription}</p>
 </div>
