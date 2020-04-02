@@ -6,14 +6,7 @@
     import { and, or, equals } from 'arql-ops';
 	
 	let posts = []; 
-
-	// post sample data: 
-	// const newPost = {
-	// 	title : 'hello',
-	// 	description: 'world'
-	// };
-	// $: $loggedIn && getPosts();
-
+	
 	function getPosts() {
 		try {
 			(async () => {

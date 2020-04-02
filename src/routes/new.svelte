@@ -21,6 +21,10 @@
         
         currDate = (date.getMonth()+1) + '/' + date.getDate() + '/'+ date.getFullYear() + ' @ ' + hours + ':' + minutes + ' ' + ampm;
         
+        if (name === '') {
+            name = 'anonymous'; 
+        }
+        
         console.log('Posted @: ', currDate);
 		const newPost = {
             title : title,

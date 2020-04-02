@@ -29,8 +29,8 @@
             try {
                 const arweave = Arweave.init();
 
-                let wallet = JSON.parse(ev.target.result);
-                arweaveWallet.set(wallet);
+                // let wallet = JSON.parse(ev.target.result);
+                // arweaveWallet.set(wallet);
 
                 arweave.wallets.jwkToAddress(wallet).then((address) => {
                     walletAddress = address;
