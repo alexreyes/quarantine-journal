@@ -26,14 +26,10 @@
     <slot></slot>
     <h1> {postTitle} </h1>
     <p class="date"> Date: {postDate}</p>
-    {#if postLink}
-        
+    {#if postLink}   
         <p>By: <a href = {postLink} target="_blank" >{postName}</a></p>
-        
         {:else}
             <p>By: {postName}</p>
-
     {/if}
-
     <p> {postDescription}</p>
 </div>

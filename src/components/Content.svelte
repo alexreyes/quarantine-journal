@@ -10,37 +10,45 @@
 	let posts = []; 
     
     onMount(async () => {
-        login();
+		login().then(function() {
+			  return getPosts();
+		});
     });
-    
+	
     function login() {
-        try {
-            const arweave = Arweave.init();
-            
-            console.log("signing in....");
+		return new Promise(function(resolve, reject) {
+			try {
+				const arweave = Arweave.init();
+				
+				console.log("signing in....");
 
-            let wallet = privateKey;
+				let wallet = privateKey;
 
-            arweaveWallet.set(wallet); 
+				arweaveWallet.set(wallet); 
 
-            arweave.wallets.jwkToAddress(wallet).then((address) => {
-                let walletAddress = address;
-            
-                storedWalletAddress.set(walletAddress);
+				arweave.wallets.jwkToAddress(wallet).then((address) => {
+					let walletAddress = address;
+					storedWalletAddress.set(walletAddress);
 
-                arweave.wallets.getBalance(address).then((balance) => {
-                    let winston = balance;
-                    let arBalance = arweave.ar.winstonToAr(balance);
+					arweave.wallets.getBalance(address).then((balance) => {
+						let winston = balance;
+						let arBalance = arweave.ar.winstonToAr(balance);
 
-                    storedWalletBalance.set(arBalance);
-                });
-            });
-        } catch (err) {
-            console.log('Error logging in: ', err);
-        }
+						storedWalletBalance.set(arBalance);
+						console.log("end of login");
+						resolve("logged in");
+					});
+				});
+			
+			} catch (err) {
+				console.log('Error logging in: ', err);
+				reject("loggin failed");
+			}
+		});
     };
 
     function getPosts() {
+		console.log("get posts called")
 		try {
 			(async () => {
 				const arweave = Arweave.init();
@@ -107,6 +115,8 @@
 <svelte:head>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<script src="https://unpkg.com/arweave/bundles/web.bundle.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 </svelte:head>
 
 <main>
@@ -123,6 +133,3 @@
         {/each}
 </section>
 </main>
-
-
-<button on:click={getPosts}>get posts</button>
