@@ -1,2 +1,2 @@
-# perma-quarantine-notes
-An arweave app that stores quarantine notes into the blockchain forever
+# perma-quarantine-notes-web
+Web 2.0 version of Quarantine Notes
