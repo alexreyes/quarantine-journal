@@ -1,6 +1,6 @@
 {
-  "name": "TODO",
-  "description": "TODO",
+  "name": "quarantine-notes",
+  "description": "A way to store notes from the quarantine permanently",
   "version": "0.0.1",
   "scripts": {
     "dev": "sapper dev",
