@@ -1,106 +1,88 @@
 <script>
 	import { arweaveWallet, storedWalletAddress} from '../components/userContext.js';
+  import { onMount } from 'svelte';
 
 	let title = ''; 
-    let description = ''; 
-    let posts = []; 
-    let currDate = '';
-	  let newPost = {};
-    let socialLink = '';
-    let name = ''; 
-    let location = ''; 
-
-    function addPost(){
-        var date = new Date();
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-        var ampm = hours >= 12 ? 'pm' : 'am';
-        
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-        minutes = minutes < 10 ? '0'+minutes : minutes;
-        
-        currDate = (date.getMonth()+1) + '/' + date.getDate() + '/'+ date.getFullYear() + ' @ ' + hours + ':' + minutes + ' ' + ampm;
-        
-        console.log('Posted @: ', currDate);
-        const newPost = {
-                title : title,
-                name: name, 
-                socialLink: socialLink,
-                description: description,
-                currDate: currDate,
-                location: location
-        };
-        saveToBlockchain(newPost);
-        title = ''; 
-        description = ''; 
-        socialLink = ''; 
-        name = ''; 
-        location = '';
-	}
+  let description = ''; 
+  let posts = []; 
+  let currDate = '';
+  let newPost = {};
+  let socialLink = '';
+  let name = ''; 
+  let location = ''; 
+      
+  function addPost(){
+    var date = new Date();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    
+    currDate = (date.getMonth()+1) + '/' + date.getDate() + '/'+ date.getFullYear() + ' @ ' + hours + ':' + minutes + ' ' + ampm;
+    
+    console.log('Posted @: ', currDate);
+    const newPost = {
+      title : title,
+      name: name, 
+      socialLink: socialLink,
+      description: description,
+      currDate: currDate,
+      location: location
+    };
+    saveToBlockchain(newPost);
+    title = ''; 
+    description = ''; 
+    socialLink = ''; 
+    name = ''; 
+    location = '';
+  }
 
 	function saveToBlockchain(post) {
     const arweave = Arweave.init();
     
     let key = $arweaveWallet; 
     (async () => {
+      var unixTime = Math.round((new Date()).getTime() / 1000)
 
-        var unixTime = Math.round((new Date()).getTime() / 1000)
+      arweave.wallets.jwkToAddress(key).then((address) => {
+          arweave.wallets.getBalance(address).then((balance) => {
+              let winston = balance;
+          });
+      });
+      let transaction = await arweave.createTransaction({
+          data: JSON.stringify(post),
+      }, key);
+      transaction.addTag('App-Name', 'QuarantineNotes')
+      transaction.addTag('App-Version', '0.0.1')
+      transaction.addTag('TestData', 'false')
+      transaction.addTag('production', 'true')
+      transaction.addTag('Unix-Time', unixTime)
 
-        arweave.wallets.jwkToAddress(key).then((address) => {
-            arweave.wallets.getBalance(address).then((balance) => {
-                let winston = balance;
-            });
-        });
-        let transaction = await arweave.createTransaction({
-            data: JSON.stringify(post),
-        }, key);
-        transaction.addTag('App-Name', 'QuarantineNotes')
-        transaction.addTag('App-Version', '0.0.1')
-        transaction.addTag('TestData', 'false')
-        transaction.addTag('production', 'true')
-        transaction.addTag('Unix-Time', unixTime)
-
-        await arweave.transactions.sign(transaction, key);
-        const response = await arweave.transactions.post(transaction);
-        
-        console.log("Status: ", response.status);
-        // console.log(transaction.id);
-        // console.log(transaction.data);
-        await arweave.transactions.post(transaction);
-        if (response.status === 200) {
-            alert('Note saved to blockchain!');
-        }
-        if (response.status == 400) {
-            alert("400: The transaction is invalid, couldn't be verified, or the wallet does not have suffucuent funds.")
-        }
-        if (response.status == 429) {
-            alert("429: The request has exceeded the clients rate limit quota.")
-        }
-        if (response.status == 503) {
-            alert("503: The nodes was unable to verify the transaction.")
-        }
+      await arweave.transactions.sign(transaction, key);
+      const response = await arweave.transactions.post(transaction);
+      
+      console.log("Status: ", response.status);
+      // console.log(transaction.id);
+      // console.log(transaction.data);
+      
+      await arweave.transactions.post(transaction);
+      if (response.status === 200) {
+          alert('Note saved to blockchain!');
+      }
+      if (response.status == 400) {
+          alert("400: The transaction is invalid, couldn't be verified, or the wallet does not have suffucuent funds.")
+      }
+      if (response.status == 429) {
+          alert("429: The request has exceeded the clients rate limit quota.")
+      }
+      if (response.status == 503) {
+          alert("503: The nodes was unable to verify the transaction.")
+      }
     })()
   }
-
-  // // Example starter JavaScript for disabling form submissions if there are invalid fields
-  // (function() {
-  //   'use strict';
-  //   window.addEventListener('load', function() {
-  //     // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  //     var forms = document.getElementsByClassName('needs-validation');
-  //     // Loop over them and prevent submission
-  //     var validation = Array.prototype.filter.call(forms, function(form) {
-  //       form.addEventListener('submit', function(event) {
-  //         if (form.checkValidity() === false) {
-  //           event.preventDefault();
-  //           event.stopPropagation();
-  //         }
-  //         form.classList.add('was-validated');
-  //       }, false);
-  //     });
-  //   }, false);
-  // })();
 </script>
 <style>
     h1 {
@@ -177,6 +159,6 @@
           </div>
       </div>
       
-      <button type="button" class="btn btn-outline-primary" on:click="{saveToBlockchain}">Submit post</button>
+      <button type="submit" class="btn btn-outline-primary" on:click="{saveToBlockchain}">Submit post</button>
     </form>
 </section>

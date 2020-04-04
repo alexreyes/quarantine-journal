@@ -8,7 +8,6 @@
 </script>
 <style>
 	.box {
-		width: 500px;
 		border: 1px solid #aaa;
 		border-radius: 2px;
 		box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
@@ -25,6 +24,7 @@
 
 <head>
 </head>
+<main>
 <div class="box">
     <slot></slot>
     <h1> {postTitle} </h1>
@@ -36,3 +36,4 @@
     {/if}
     <p> {postDescription}</p>
 </div>
+</main>
