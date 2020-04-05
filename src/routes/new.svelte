@@ -1,6 +1,7 @@
 <script>
-	import { arweaveWallet, storedWalletAddress} from '../components/userContext.js';
+	import { arweaveWallet, storedWalletAddress, submittedPost} from '../components/userContext.js';
   import { onMount } from 'svelte';
+  import { goto } from '@sapper/app';
 
 	let title = ''; 
   let description = ''; 
@@ -11,7 +12,13 @@
   let name = ''; 
   let location = ''; 
       
+  const navigateAndSave = async () => {
+    localStorage['submittedPost'] = 'true'; 
+    await goto('.');
+  }
+
   function addPost(){
+    console.log("submit clicked");     
     var date = new Date();
     var hours = date.getHours();
     var minutes = date.getMinutes();
@@ -23,6 +30,14 @@
     
     currDate = (date.getMonth()+1) + '/' + date.getDate() + '/'+ date.getFullYear() + ' @ ' + hours + ':' + minutes + ' ' + ampm;
     
+    if (name === '') {
+      name = "anonymous";
+    }
+    
+    if (location === '') {
+      location = "unknown"; 
+    }
+
     console.log('Posted @: ', currDate);
     const newPost = {
       title : title,
@@ -32,6 +47,8 @@
       currDate: currDate,
       location: location
     };
+    console.log(newPost);
+
     saveToBlockchain(newPost);
     title = ''; 
     description = ''; 
@@ -42,7 +59,7 @@
 
 	function saveToBlockchain(post) {
     const arweave = Arweave.init();
-    
+    console.log(arweave);
     let key = $arweaveWallet; 
     (async () => {
       var unixTime = Math.round((new Date()).getTime() / 1000)
@@ -50,6 +67,7 @@
       arweave.wallets.jwkToAddress(key).then((address) => {
           arweave.wallets.getBalance(address).then((balance) => {
               let winston = balance;
+              console.log(winston);
           });
       });
       let transaction = await arweave.createTransaction({
@@ -65,12 +83,15 @@
       const response = await arweave.transactions.post(transaction);
       
       console.log("Status: ", response.status);
-      // console.log(transaction.id);
+
+      localStorage['transactionId'] = transaction.id;
+      
+      console.log(transaction.id);
       // console.log(transaction.data);
       
       await arweave.transactions.post(transaction);
       if (response.status === 200) {
-          alert('Note saved to blockchain!');
+          navigateAndSave();
       }
       if (response.status == 400) {
           alert("400: The transaction is invalid, couldn't be verified, or the wallet does not have suffucuent funds.")
@@ -159,6 +180,6 @@
           </div>
       </div>
       
-      <button type="submit" class="btn btn-outline-primary" on:click="{saveToBlockchain}">Submit post</button>
+      <button type="button" class="btn btn-outline-primary" on:click="{addPost}">Submit post</button>
     </form>
 </section>

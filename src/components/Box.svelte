@@ -15,10 +15,13 @@
         margin: 0 0 1em 0;
         text-align: center;
         margin: 0 auto;
-        margin-bottom: 30px; 
+        margin-bottom: 2em; 
 	}
     .date {
         color: #808080; 
+    }
+    p {
+        font-size:120%
     }
 </style>
 

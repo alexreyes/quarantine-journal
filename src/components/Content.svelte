@@ -1,21 +1,35 @@
 <script>
-    import { fly } from 'svelte/transition';	
-    import {getContext} from 'svelte';
-	import { storedWalletAddress, storedWalletBalance, arweaveWallet} from './userContext.js';
+	import { storedWalletAddress, storedWalletBalance, arweaveWallet, submittedPost} from './userContext.js';
     import privateKey from './main-keyfile.json'
     import { onMount } from 'svelte';
     import { and, or, equals } from 'arql-ops';
 	import Box from './Box.svelte'; 
+	import PopupMessage from './PopupMessage.svelte'; 
+	import { getContext } from 'svelte';
+
+	const { open } = getContext('simple-modal');
+
+	const showNewPostModal = () => {
+		open(PopupMessage, { message: "You just made a post!" });
+	};
 
 	let posts = []; 
-    
+	
     onMount(async () => {
 		login().then(function() {
 			  return getPosts();
 		});
-    });
-	
-    function login() {
+
+		var postPopup = localStorage['submittedPost'] || 'false';
+		console.log("Popup: ", postPopup); 
+
+		if (postPopup === 'true') {
+			localStorage['submittedPost'] = 'false'; 
+			showNewPostModal(); 
+		}
+	});
+
+    function login() { 
 		return new Promise(function(resolve, reject) {
 			try {
 				const arweave = Arweave.init();
