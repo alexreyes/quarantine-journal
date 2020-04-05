@@ -126,7 +126,7 @@
 		font-weight: 100;
 	}
 	.titleStuff {
-		padding-bottom:3.5em; 
+		padding-bottom:3em; 
 		text-align: center;
 	}
 	.history {

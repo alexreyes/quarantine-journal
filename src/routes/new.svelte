@@ -37,6 +37,12 @@
     if (location === '') {
       location = "Unkown location"; 
     }
+    if (socialLink != '') {
+      if (!socialLink.match(/^[a-zA-Z]+:\/\//))
+      {
+          socialLink = 'http://' + socialLink;
+      }
+    }
 
     console.log('Posted @: ', currDate);
     const newPost = {
