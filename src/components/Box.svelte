@@ -15,7 +15,7 @@
         margin: 0 0 1em 0;
         text-align: center;
         margin: 0 auto;
-        margin-bottom: 2em; 
+        margin-bottom: 1.5em; 
 	}
     .date {
         color: #808080; 
@@ -32,6 +32,7 @@
     <slot></slot>
     <h1> {postTitle} </h1>
     <p class="date">{postLocation} on {postDate}</p>
+    
     {#if postLink}   
         <p>By: <a href = {postLink} target="_blank" >{postName}</a></p>
         {:else}

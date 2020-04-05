@@ -26,6 +26,8 @@
 		if (postPopup === 'true') {
 			localStorage['submittedPost'] = 'false'; 
 			showNewPostModal(); 
+
+			// localStorage['submittedPost'] = 'false'; 
 		}
 	});
 
@@ -95,6 +97,13 @@
 
 					});
 				}
+				var recentPost = localStorage['post'] || ''; 
+				
+				if (recentPost) {
+					console.log("Most recent post should be added");
+					posts.push(JSON.parse(recentPost));
+					localStorage['post'] = ''; 
+				}
 			})()
 		}
 		catch (exception) {
@@ -115,10 +124,17 @@
 		text-transform: uppercase;
 		font-size: 4em;
 		font-weight: 100;
-		padding-bottom: 1em;
+	}
+	.titleStuff {
+		padding-bottom:3.5em; 
 		text-align: center;
 	}
-
+	.history {
+		  color: #424949;
+		  font-style: italic;
+		  font-size:1.3em; 
+		  font-weight: 200; 
+	}
 	@media (min-width: 340px) {
 		main {
 			max-width: none;
@@ -132,7 +148,10 @@
 </svelte:head>
 
 <main>
-	<h1>Quarantine Notes</h1>
+	<div class = "titleStuff">
+		<h1>Quarantine Notes</h1>
+		<p class = "history">Write history</p>
+	</div>
 	<section>
         {#each posts as post}
             <Box

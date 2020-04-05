@@ -35,7 +35,7 @@
     }
     
     if (location === '') {
-      location = "unknown"; 
+      location = "Unkown location"; 
     }
 
     console.log('Posted @: ', currDate);
@@ -50,6 +50,7 @@
     console.log(newPost);
 
     saveToBlockchain(newPost);
+
     title = ''; 
     description = ''; 
     socialLink = ''; 
@@ -61,6 +62,7 @@
     const arweave = Arweave.init();
     console.log(arweave);
     let key = $arweaveWallet; 
+    
     (async () => {
       var unixTime = Math.round((new Date()).getTime() / 1000)
 
@@ -70,6 +72,9 @@
               console.log(winston);
           });
       });
+      localStorage['post'] = JSON.stringify(post);
+      console.log("Saving post to cache: ", JSON.stringify(post));  
+
       let transaction = await arweave.createTransaction({
           data: JSON.stringify(post),
       }, key);
@@ -85,7 +90,7 @@
       console.log("Status: ", response.status);
 
       localStorage['transactionId'] = transaction.id;
-      
+
       console.log(transaction.id);
       // console.log(transaction.data);
       
@@ -151,8 +156,8 @@
           </div>
 
           <div class = "socialLink col "> 
-              <label for="validationCustom02">Link</label>
-              <input type="text" class="form-control" id="socialLink" bind:value={socialLink} placeholder="Link to your social!"/> 
+              <label for="validationCustom02">Your social media link</label>
+              <input type="text" class="form-control" id="socialLink" bind:value={socialLink} placeholder="Plug your social media"/> 
           </div>
       </div>
 
