@@ -80,7 +80,7 @@
 <p>The block will be viewable in a couple of minutes.</p>
 
 <h2>Share</h2>
-{#if mobile === false}
+{#if !mobile}
 		<ul class="list-inline">
 			<li>
 				<div class="fb-share-button" data-href="https://quaratine-notes.arweave.xyz/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fquaratine-notes.arweave.xyz%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
