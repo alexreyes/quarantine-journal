@@ -16,7 +16,7 @@
 <h1>about</h1>
 
 <br>
-<p>Quarantine Notes is a project that was built for the Open Web Hackathon, hosted by <a href="https://www.arweave.org/" target="_blank">arweave</a>. The development of this project took place during the <a href="https://en.wikipedia.org/wiki/Coronavirus" target="_blank">Coronavirus pandemic</a> in March 2020 and was built by <a href="https://www.alexreyes.xyz/" target="_blank">Alex Reyes.</a></p>
+<p>Quarantine Notes is a project that was built for the Open Web Hackathon, hosted by <a href="https://www.arweave.org/" target="_blank">arweave</a>. The development of this project took place during the <a href="https://en.wikipedia.org/wiki/Coronavirus" target="_blank">Coronavirus epidemic</a> in March 2020 and was built by <a href="https://www.alexreyes.xyz/" target="_blank">Alex Reyes.</a></p>
 
 <p>The explicit aim of this project is to provide a way for people living during this time period to record notes/reflections/any text they would like future generations to be able to view from this historic time. </p>
 
