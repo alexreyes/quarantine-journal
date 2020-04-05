@@ -150,7 +150,7 @@
 <main>
 	<div class = "titleStuff">
 		<h1>Quarantine Notes</h1>
-		<p class = "history">Write history</p>
+		<p class = "history">Write history onto the blockchain</p>
 	</div>
 	<section>
         {#each posts as post}
