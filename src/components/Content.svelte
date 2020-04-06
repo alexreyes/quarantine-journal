@@ -1,6 +1,6 @@
 <script>
 	import { storedWalletAddress, storedWalletBalance, arweaveWallet, submittedPost} from './userContext.js';
-    import privateKey from './main-keyfile.json'
+    import privateKey from './testKeyfile.json'
     import { onMount } from 'svelte';
     import { and, or, equals } from 'arql-ops';
 	import Box from './Box.svelte'; 
