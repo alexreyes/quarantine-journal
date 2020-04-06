@@ -164,10 +164,10 @@
   <input type="text" class="form-control" id="location" bind:value={location} placeholder="Pennsylvania, USA" required/> 
   <br>
   <label><b>Title</b></label>
-  <input type="text" class="form-control" id="title"  bind:value = {title} placeholder="Enter a title" required/> 
+  <input type="text" class="form-control" id="title"  maxlength="140" bind:value = {title} placeholder="Enter a title" required/> 
   <br>
   <label><b>Description</b></label>
-  <textarea rows="3" class="form-control" id="description" bind:value ={description}  placeholder="Write the body of your post!" required/>
+  <textarea rows="3" class="form-control" id="description" maxlength="10000" bind:value ={description}  placeholder="Write the body of your post!" required/>
 
   <button type="submit" class="btn btn-outline-primary">Submit post</button>
 </form>
