@@ -26,8 +26,6 @@
 		if (postPopup === 'true') {
 			localStorage['submittedPost'] = 'false'; 
 			showNewPostModal(); 
-
-			// localStorage['submittedPost'] = 'false'; 
 		}
 	});
 

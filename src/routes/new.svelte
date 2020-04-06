@@ -2,6 +2,7 @@
 	import { arweaveWallet, storedWalletAddress, submittedPost} from '../components/userContext.js';
   import { onMount } from 'svelte';
   import { goto } from '@sapper/app';
+  import privateKey from '../components/testKeyfile.json'
 
 	let title = ''; 
   let description = ''; 
@@ -17,8 +18,7 @@
     await goto('.');
   }
 
-  function addPost(){
-    console.log("submit clicked");     
+  function formatDate() {
     var date = new Date();
     var hours = date.getHours();
     var minutes = date.getMinutes();
@@ -28,15 +28,18 @@
     hours = hours ? hours : 12; // the hour '0' should be '12'
     minutes = minutes < 10 ? '0'+minutes : minutes;
     
-    currDate = (date.getMonth()+1) + '/' + date.getDate() + '/'+ date.getFullYear() + ' @ ' + hours + ':' + minutes + ' ' + ampm;
+    let formattedDate = (date.getMonth()+1) + '/' + date.getDate() + '/'+ date.getFullYear() + ' @ ' + hours + ':' + minutes + ' ' + ampm;
+
+    return formattedDate; 
+  }
+
+  function addPost(){
+    console.log("submit clicked");     
     
-    if (name === '') {
-      name = "anonymous";
-    }
+    currDate = formatDate(); 
+
+    console.log('Posted @: ', currDate);
     
-    if (location === '') {
-      location = "Unkown location"; 
-    }
     if (socialLink != '') {
       if (!socialLink.match(/^[a-zA-Z]+:\/\//))
       {
@@ -44,7 +47,6 @@
       }
     }
 
-    console.log('Posted @: ', currDate);
     const newPost = {
       title : title,
       name: name, 
@@ -64,11 +66,13 @@
     location = '';
   }
 
+
 	function saveToBlockchain(post) {
     const arweave = Arweave.init();
     console.log(arweave);
-    let key = $arweaveWallet; 
-    
+
+    let key = privateKey; 
+
     (async () => {
       var unixTime = Math.round((new Date()).getTime() / 1000)
 
@@ -116,22 +120,15 @@
     })()
   }
 </script>
+
 <style>
     h1 {
         padding-bottom: 0.2em;
     }
-
-    .theDesc {
-        padding-top: 1em; 
-    }
-
     .theName {
         padding-bottom: 1em; 
     }
     .socialLink {
-        padding-bottom: 1em; 
-    }
-    .theLocation {
         padding-bottom: 1em; 
     }
     button {
@@ -150,47 +147,27 @@
     Note: All posts stored on the <a href="https://www.arweave.org/" target="_blank" class="alert-link">arweave blockchain</a> are permanent, un-editable, un-deleteable, and public. 
 </div>
 
-<section>
-    <form class="needs-validation" novalidate>
-      <div class="form-row">
-          <div class = "theName col"> 
-              <label for="validationCustom01">Name</label>
-              <input type="text" class="form-control" id="name validationCustom01" bind:value={name} placeholder="Who wrote this?" required/> 
-              <div class="valid-feedback">
-                Looks good!
-              </div>
-          </div>
+<form on:submit|preventDefault="{addPost}">
+  <div class="form-row">
+    <div class = "theName col"> 
+        <label>Name</label>
+        <input type="text" class="form-control" id="name" bind:value={name} placeholder="Who wrote this?" required/> 
+    </div>
 
-          <div class = "socialLink col "> 
-              <label for="validationCustom02">Your social media link</label>
-              <input type="text" class="form-control" id="socialLink" bind:value={socialLink} placeholder="Plug your social media"/> 
-          </div>
-      </div>
+    <div class = "socialLink col "> 
+        <label >Your social media link</label>
+        <input type="text" class="form-control" id="socialLink" bind:value={socialLink} placeholder="Plug your social media"/> 
+    </div>
+  </div>
+  
+  <label>Location</label>
+  <input type="text" class="form-control" id="location" bind:value={location} placeholder="Pennsylvania, USA" required/> 
+  <br>
+  <label><b>Title</b></label>
+  <input type="text" class="form-control" id="title"  bind:value = {title} placeholder="Enter a title" required/> 
+  <br>
+  <label><b>Description</b></label>
+  <textarea rows="3" class="form-control" id="description" bind:value ={description}  placeholder="Write the body of your post!" required/>
 
-      <div class = "theLocation"> 
-          <label for="validationCustom03">Location</label>
-          <input type="text" class="form-control" id="location validationCustom02" bind:value={location} placeholder="Pennsylvania, USA" required/> 
-          <div class="valid-feedback">
-            Looks good!
-          </div>
-      </div>
-
-      <div class = "theTitle"> 
-          <label for="validationCustom04"><b>Title</b></label>
-          <input type="text" class="form-control" id="title validationCustom03" bind:value={title} placeholder="Enter a title" required/> 
-          <div class="invalid-feedback">
-            Can't write without a title!
-          </div>
-      </div>
-      
-      <div class="theDesc">
-          <label for="validationCustom05"><b>Description</b></label>
-          <textarea rows="3" class="form-control" id="description validationCustom04" bind:value ={description}  placeholder="Write the body of your post!" required/>
-          <div class="invalid-feedback">
-            Every post needs a description!
-          </div>
-      </div>
-      
-      <button type="button" class="btn btn-outline-primary" on:click="{addPost}">Submit post</button>
-    </form>
-</section>
+  <button type="submit" class="btn btn-outline-primary">Submit post</button>
+</form>
