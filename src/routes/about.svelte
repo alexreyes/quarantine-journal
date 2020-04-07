@@ -16,13 +16,13 @@
 <h1>about</h1>
 
 <br>
+
+<p>The aim of Quarantine Notes is to provide a way for people living during this historic time period the ability to record notes/reflections/etc into a permanent archive</p>
+
+<p>Quarantine Notes uses the <a href = "https://arweave.org" target="_blank">arweave blockchain</a> to store posts, which means all posts made on this site are public and viewable by anyone. All posts will be stored on the blockchain forever in the form of a permanent archive.</p>
+
 <p>The development of this project took place during the <a href="https://en.wikipedia.org/wiki/Coronavirus" target="_blank">Coronavirus epidemic</a> in March and April 2020 and was built by <a href="https://www.alexreyes.xyz/" target="_blank">Alex Reyes.</a></p>
 
-<p>The explicit aim of Quarantine Notes is to provide a way for people living during this historic time period to record notes/reflections/any text they would like future generations to be able to view from this time. </p>
-
-<p>Since this project uses the arweave blockchain to store posts, all posts which are made on this site are public and viewable by anyone. They will be on the blockchain permanently or at least as long as the arweave project continues. </p>
-
-<p>This project is free, and always will be.</p>
 <br>
 <br>    
 <p>P.S. Quarantine Notes is <a href="https://github.com/alexreyes/perma-quarantine-notes-web">open source!</a></p>

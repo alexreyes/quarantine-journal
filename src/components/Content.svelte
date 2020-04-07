@@ -6,6 +6,7 @@
 	import Box from './Box.svelte'; 
 	import PopupMessage from './PopupMessage.svelte'; 
 	import { getContext } from 'svelte';
+	import { retryWithBackoff } from "promises-tho";
 
 	const { open } = getContext('simple-modal');
 
@@ -17,7 +18,9 @@
 	
     onMount(async () => {
 		login().then(function() {
-			  return getPosts();
+			const getPostsWithRetries = retryWithBackoff(getPosts)
+
+			getPostsWithRetries(); 
 		});
 
 		var postPopup = localStorage['submittedPost'] || 'false';
@@ -63,50 +66,59 @@
 
     function getPosts() {
 		console.log("get posts called")
-		try {
-			(async () => {
-				const arweave = Arweave.init();
 
-				const myQuery = and(
-					equals('from', $storedWalletAddress),
-					equals('App-Name', 'QuarantineNotes'),
-					equals('TestData', 'false'),
-					equals('production', 'true'),
-					or(
-						equals('App-Version', '0.0.1'),
-					)
-				);
-						
-				const results = await arweave.arql(myQuery);
+		return new Promise(function(resolve, reject) {
+			try {
+				(async () => {
+					const arweave = Arweave.init();
 
-				for (var count = 0; count < results.length; count++) {
-													
-					const blockchainTransaction = arweave.transactions.get(results[count]).then(blockchainTransaction => {
-
-						let returnedJson = blockchainTransaction.get('data', {decode: true, string: true});
-
-						posts = posts.concat(JSON.parse(returnedJson)); // add returned posts to the view
+					const myQuery = and(
+						equals('from', $storedWalletAddress),
+						equals('App-Name', 'QuarantineNotes'),
+						equals('TestData', 'true'),
+						equals('production', 'false'),
+						or(
+							equals('App-Version', '0.0.1'),
+						)
+					);
 							
-						// Get tags
-						blockchainTransaction.get('tags').forEach(tag => {
-							let key = tag.get('name', {decode: true, string: true});
-							let value = tag.get('value', {decode: true, string: true});
-						});
+					const results = await arweave.arql(myQuery);
 
-					});
-				}
-				var recentPost = localStorage['post'] || ''; 
-				
-				if (recentPost) {
-					console.log("Most recent post should be added");
-					posts.push(JSON.parse(recentPost));
-					localStorage['post'] = ''; 
-				}
-			})()
-		}
-		catch (exception) {
-			console.log("getting posts error: ", exception); 
-		}
+					// If arql returns an empty array, it's gonna need a retry 
+					if (results.length === 0) { throw new Error('No results') }
+
+					for (var count = 0; count < results.length; count++) {
+														
+						const blockchainTransaction = arweave.transactions.get(results[count]).then(blockchainTransaction => {
+
+							let returnedJson = blockchainTransaction.get('data', {decode: true, string: true});
+
+							posts = posts.concat(JSON.parse(returnedJson)); // add returned posts to the view
+								
+							// Get tags
+							blockchainTransaction.get('tags').forEach(tag => {
+								let key = tag.get('name', {decode: true, string: true});
+								let value = tag.get('value', {decode: true, string: true});
+							});
+						});
+					}
+
+					// retrieve newly made post from cache
+					var recentPost = localStorage['post'] || ''; 
+					
+					if (recentPost) {
+						console.log("Most recent post should be added");
+						posts.push(JSON.parse(recentPost));
+						localStorage['post'] = ''; 
+					}
+					resolve("get posts worked");
+
+				})()
+			}
+			catch (exception) {
+				console.log("getting posts error: ", exception); 
+			}
+		});
 	}
     
 </script>

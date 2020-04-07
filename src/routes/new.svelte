@@ -26,7 +26,7 @@
     
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
     
     let formattedDate = (date.getMonth()+1) + '/' + date.getDate() + '/'+ date.getFullYear() + ' @ ' + hours + ':' + minutes + ' ' + ampm;
 
@@ -90,8 +90,8 @@
       }, key);
       transaction.addTag('App-Name', 'QuarantineNotes')
       transaction.addTag('App-Version', '0.0.1')
-      transaction.addTag('TestData', 'false')
-      transaction.addTag('production', 'true')
+      transaction.addTag('TestData', 'true')
+      transaction.addTag('production', 'false')
       transaction.addTag('Unix-Time', unixTime)
 
       await arweave.transactions.sign(transaction, key);
@@ -139,6 +139,7 @@
     <title>New post</title>
     <script src="https://unpkg.com/arweave/bundles/web.bundle.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </svelte:head>
 
 <h1>new post</h1>
@@ -168,6 +169,6 @@
   <br>
   <label><b>Description</b></label>
   <textarea rows="3" class="form-control" id="description" maxlength="10000" bind:value ={description}  placeholder="Write the body of your post!" required/>
-
+  
   <button type="submit" class="btn btn-outline-primary">Submit post</button>
 </form>

@@ -204,8 +204,7 @@
       on:click={handleOuterClick}
       bind:this={background}
       transition:currentTransitionBg={state.transitionBgProps}
-      style={cssBg}
-    >
+      style={cssBg}>
       <div class="window-wrap" bind:this={wrap}>
         <div
           class="window"
