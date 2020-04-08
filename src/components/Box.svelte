@@ -31,7 +31,7 @@
 <div class="box">
     <slot></slot>
     <h1> {postTitle} </h1>
-    <p class="date">{postLocation} on {postDate} EST</p>
+    <p class="date">{postLocation} on {postDate}</p>
     
     {#if postLink}   
         <p>By: <a href = {postLink} target="_blank" >{postName}</a></p>

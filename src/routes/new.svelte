@@ -2,9 +2,10 @@
 	import { arweaveWallet, storedWalletAddress, submittedPost} from '../components/userContext.js';
   import { onMount } from 'svelte';
   import { goto } from '@sapper/app';
-  import privateKey from '../components/testKeyfile.json'
+  import privateKey from '../components/testKeyfile.json' 
+  import { DateTime } from "luxon";
 
-	let title = ''; 
+let title = ''; 
   let description = ''; 
   let posts = []; 
   let currDate = '';
@@ -12,31 +13,19 @@
   let socialLink = '';
   let name = ''; 
   let location = ''; 
-      
+  let isoDateTime; 
+
   const navigateAndSave = async () => {
     localStorage['submittedPost'] = 'true'; 
     await goto('.');
   }
-
-  function formatDate() {
-    var date = new Date();
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var ampm = hours >= 12 ? 'pm' : 'am';
-    
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    
-    let formattedDate = (date.getMonth()+1) + '/' + date.getDate() + '/'+ date.getFullYear() + ' @ ' + hours + ':' + minutes + ' ' + ampm;
-
-    return formattedDate; 
-  }
-
+  
   function addPost(){
     console.log("submit clicked");     
-    
-    currDate = formatDate(); 
+
+    var dt = DateTime.local();
+    isoDateTime = dt.toString(); 
+    currDate = dt.toLocaleString(DateTime.DATETIME_MED);
 
     console.log('Posted @: ', currDate);
     
@@ -88,11 +77,12 @@
       let transaction = await arweave.createTransaction({
           data: JSON.stringify(post),
       }, key);
+      
       transaction.addTag('App-Name', 'QuarantineNotes')
       transaction.addTag('App-Version', '0.0.1')
       transaction.addTag('TestData', 'true')
       transaction.addTag('production', 'false')
-      transaction.addTag('Unix-Time', unixTime)
+      transaction.addTag('ISO-Time', isoDateTime)
 
       await arweave.transactions.sign(transaction, key);
       const response = await arweave.transactions.post(transaction);
@@ -139,7 +129,8 @@
     <title>New post</title>
     <script src="https://unpkg.com/arweave/bundles/web.bundle.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@1.23.0/build/global/luxon.min.js"></script>
+
 </svelte:head>
 
 <h1>new post</h1>
