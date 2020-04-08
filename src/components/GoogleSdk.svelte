@@ -1,5 +1,5 @@
 <script>
-  import loader from '@beyonk/async-script-loader'
+  // import loader from '@beyonk/async-script-loader'
   import { onMount, createEventDispatcher } from 'svelte'
   import { mapsLoaded, mapsLoading } from './userContext.js'
 
@@ -19,19 +19,36 @@
       dispatch('ready')
     }
 
-    if (!$mapsLoading) {
+    // Only do this if we are not already loading, or if we 
+    // haven't already loaded 
+
+    if (!$mapsLoading && !$mapsLoaded) {
+
+      // Build url the same way. 
+
       const url = [
         '//maps.googleapis.com/maps/api/js?',
         apiKey ? `key=${apiKey}&` : '',
         `libraries=places&callback=byGmapsReady`
       ].join('')
 
+      
+      // Create script element, set src attribute, and add to the document
+      // as a child of the <head> element.
+      const docHeadElement = document.querySelector('head');
+      
+      const scriptElement = document.createElement('script'); 
+      scriptElement.setAttribute('src', url);
+
+      docHeadElement.appendChild(scriptElement);
+
       mapsLoading.set(true)
 
-      loader(
+      /*loader(
         url,
         () => { return $mapsLoaded }
-      )
+      )*/
+      
     }
   })
 </script>
