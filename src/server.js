@@ -7,7 +7,13 @@ const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 
 const app =
-    polka() // You can also use Express
+    polka()
+    .get('/api/test', (req, res) => {
+        res.end('Hello World');
+    })
+    .get('/api/test_json', (req, res) => {
+        res.end(JSON.stringify({ hello: 'world' }));
+    })
     .use(
         compression({ threshold: 0 }),
         sirv('static', { dev }),
