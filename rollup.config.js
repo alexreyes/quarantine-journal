@@ -7,32 +7,26 @@ import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 import json from '@rollup/plugin-json';
 import replace from '@rollup/plugin-replace';
+import dotenv from "dotenv";
 
-// import {config} from 'dotenv';
-
-// const production = !process.env.ROLLUP_WATCH;
+dotenv.config();
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
-
+	  
 export default {
 	client: {
 		input: config.client.input(),
 		output: config.client.output(),
 		plugins: [
-			// replace({
-			// 	process: JSON.stringify({        
-			// 		env: {          
-			// 		  isProd: production,          
-			// 		  GOOGLE_KEY : process.env.GOOGLE_KEY  //only using API_URL        
-			// 		}      
-			// 	  }),
-			// 	'process.browser': true,
-			// 	'process.env.NODE_ENV': JSON.stringify(mode)
-			// }),
+			replace({
+			  "process.browser": true,
+			  "process.env.GOOGLE_KEY": JSON.stringify(process.env.GOOGLE_KEY),
+			  "process.env.NODE_ENV": JSON.stringify(mode),
+			}),
 			svelte({
 				dev,
 				hydratable: true,

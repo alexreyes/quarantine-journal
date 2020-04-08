@@ -44,11 +44,6 @@
 
       mapsLoading.set(true)
 
-      /*loader(
-        url,
-        () => { return $mapsLoaded }
-      )*/
-      
     }
   })
 </script>

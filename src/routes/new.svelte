@@ -16,6 +16,8 @@
   let place = ''; 
   let isoDateTime; 
 
+  let googApiKey = process.env.GOOGLE_KEY; 
+
   const navigateAndSave = async () => {
     localStorage['submittedPost'] = 'true'; 
     await goto('.');
@@ -27,7 +29,9 @@
     var dt = DateTime.local();
     isoDateTime = dt.toString(); 
     currDate = dt.toLocaleString(DateTime.DATETIME_MED);
+    console.log(googApiKey); 
 
+    return 0; 
     console.log('Posted @: ', currDate);
     
     if (socialLink != '') {
@@ -156,7 +160,7 @@
   </div>
     
   <label>Location</label>
-  <GooglePlacesAutocomplete apiKey="" bind:value={place}/>
+  <GooglePlacesAutocomplete apiKey="{googApiKey}" bind:value={place}/>
   <br>
 
   <label><b>Title</b></label>
