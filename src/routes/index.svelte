@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-	<title>Quarantine Notes</title>
+	<title>Quarantine Journal</title>
 </svelte:head>
 
 <Modal><Content/></Modal>

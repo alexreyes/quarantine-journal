@@ -36,7 +36,7 @@
 		return new Promise(function(resolve, reject) {
 			try {
 				const arweave = Arweave.init();
-				
+				console.log("Arweave: ", arweave); 
 				console.log("signing in....");
 
 				let wallet = privateKey;
@@ -159,8 +159,8 @@
 
 <main>
 	<div class = "titleStuff">
-		<h1>Quarantine Notes</h1>
-		<p class = "history">Write history onto the blockchain</p>
+		<h1>Quarantine Journal</h1>
+		<p class = "history">Write your quarantine stories and save them permanently</p>
 	</div>
 	<section>
         {#each posts as post}

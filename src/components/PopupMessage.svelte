@@ -2,7 +2,7 @@
 	export let message;
 
 	const shareData = {
-		title: 'Quarantine Notes',
+		title: 'Quarantine Journal',
 		text: 'I just made a permanent note from the quarantine! Click this link to check out the site.',
 		url: 'https://quaratine-notes.arweave.xyz/',
 	}

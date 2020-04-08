@@ -4,15 +4,16 @@
   import { goto } from '@sapper/app';
   import privateKey from '../components/testKeyfile.json' 
   import { DateTime } from "luxon";
+  import GooglePlacesAutocomplete from '../components/GooglePlacesAutocomplete.svelte'; 
 
-let title = ''; 
+  let title = ''; 
   let description = ''; 
   let posts = []; 
   let currDate = '';
   let newPost = {};
   let socialLink = '';
   let name = ''; 
-  let location = ''; 
+  let place = ''; 
   let isoDateTime; 
 
   const navigateAndSave = async () => {
@@ -21,7 +22,7 @@ let title = '';
   }
   
   function addPost(){
-    console.log("submit clicked");     
+    console.log("submit clicked"); 
 
     var dt = DateTime.local();
     isoDateTime = dt.toString(); 
@@ -42,7 +43,7 @@ let title = '';
       socialLink: socialLink,
       description: description,
       currDate: currDate,
-      location: location
+      location: place.formatted_address
     };
     console.log(newPost);
 
@@ -83,6 +84,8 @@ let title = '';
       transaction.addTag('TestData', 'true')
       transaction.addTag('production', 'false')
       transaction.addTag('ISO-Time', isoDateTime)
+      transaction.addTag('loc-lat', place.geometry.location.lat())
+      transaction.addTag('loc-long', place.geometry.location.lng())
 
       await arweave.transactions.sign(transaction, key);
       const response = await arweave.transactions.post(transaction);
@@ -126,17 +129,17 @@ let title = '';
     }
 </style>
 <svelte:head>
-    <title>New post</title>
+    <title>New entry</title>
     <script src="https://unpkg.com/arweave/bundles/web.bundle.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/luxon@1.23.0/build/global/luxon.min.js"></script>
 
 </svelte:head>
 
-<h1>new post</h1>
+<h1>new entry</h1>
 
 <div class="alert alert-info" role="alert">
-    Note: All posts stored on the <a href="https://www.arweave.org/" target="_blank" class="alert-link">arweave blockchain</a> are permanent, un-editable, un-deleteable, and public. 
+    Note: All entries stored on the <a href="https://www.arweave.org/" target="_blank" class="alert-link">arweave blockchain</a> are permanent, un-editable, un-deleteable, and public. 
 </div>
 
 <form on:submit|preventDefault="{addPost}">
@@ -151,15 +154,16 @@ let title = '';
         <input type="text" class="form-control" id="socialLink" bind:value={socialLink} placeholder="Plug your social media"/> 
     </div>
   </div>
-  
+    
   <label>Location</label>
-  <input type="text" class="form-control" id="location" bind:value={location} placeholder="Pennsylvania, USA" required/> 
+  <GooglePlacesAutocomplete apiKey="" bind:value={place}/>
   <br>
+
   <label><b>Title</b></label>
   <input type="text" class="form-control" id="title"  maxlength="140" bind:value = {title} placeholder="Enter a title" required/> 
   <br>
   <label><b>Description</b></label>
-  <textarea rows="3" class="form-control" id="description" maxlength="10000" bind:value ={description}  placeholder="Write the body of your post!" required/>
+  <textarea rows="3" class="form-control" id="description" maxlength="10000" bind:value ={description}  placeholder="Write the body of your entry" required/>
   
   <button type="submit" class="btn btn-outline-primary">Submit post</button>
 </form>

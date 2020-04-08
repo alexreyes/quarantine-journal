@@ -55,6 +55,6 @@
 	<ul>
 		<li><a aria-current='{segment === "" ? "page" : undefined}' class="text-decoration-none home" href='.' >home</a></li>
 		<li><a aria-current='{segment === "about" ? "page" : undefined}' class="text-decoration-none new" href='about'>about</a></li>
-		<li><a aria-current='{segment === "new" ? "page" : undefined}' class="text-decoration-none new" href='new'>new</a></li>
+		<li><a aria-current='{segment === "new" ? "page" : undefined}' class="text-decoration-none new" href='new'>new entry</a></li>
 	</ul>
 </nav>

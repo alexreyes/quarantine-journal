@@ -1,5 +1,4 @@
 import resolve from '@rollup/plugin-node-resolve';
-import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
 import babel from 'rollup-plugin-babel';
@@ -7,6 +6,11 @@ import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 import json from '@rollup/plugin-json';
+import replace from '@rollup/plugin-replace';
+
+// import {config} from 'dotenv';
+
+// const production = !process.env.ROLLUP_WATCH;
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -19,10 +23,16 @@ export default {
 		input: config.client.input(),
 		output: config.client.output(),
 		plugins: [
-			replace({
-				'process.browser': true,
-				'process.env.NODE_ENV': JSON.stringify(mode)
-			}),
+			// replace({
+			// 	process: JSON.stringify({        
+			// 		env: {          
+			// 		  isProd: production,          
+			// 		  GOOGLE_KEY : process.env.GOOGLE_KEY  //only using API_URL        
+			// 		}      
+			// 	  }),
+			// 	'process.browser': true,
+			// 	'process.env.NODE_ENV': JSON.stringify(mode)
+			// }),
 			svelte({
 				dev,
 				hydratable: true,
