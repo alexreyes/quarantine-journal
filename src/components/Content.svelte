@@ -35,7 +35,7 @@
     function login() { 
 		return new Promise(function(resolve, reject) {
 			try {
-				const arweave = Arweave.init();
+				const arweave = Arweave.init({ host: 'arweave.net', port: 443, protocol: 'https' });
 				
 				console.log("signing in....");
 
@@ -70,7 +70,7 @@
 		return new Promise(function(resolve, reject) {
 			try {
 				(async () => {
-					const arweave = Arweave.init();
+					const arweave = Arweave.init({ host: 'arweave.net', port: 443, protocol: 'https' });
 
 					const myQuery = and(
 						equals('from', $storedWalletAddress),
