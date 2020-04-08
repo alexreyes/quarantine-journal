@@ -16,6 +16,8 @@
   let place = ''; 
   let isoDateTime; 
 
+  let googKey = process.env.GOOGLE_KEY; 
+
   const navigateAndSave = async () => {
     localStorage['submittedPost'] = 'true'; 
     await goto('.');
@@ -27,7 +29,7 @@
     var dt = DateTime.local();
     isoDateTime = dt.toString(); 
     currDate = dt.toLocaleString(DateTime.DATETIME_MED);
-
+    
     console.log('Posted @: ', currDate);
     
     if (socialLink != '') {
@@ -95,7 +97,6 @@
       localStorage['transactionId'] = transaction.id;
 
       console.log(transaction.id);
-      // console.log(transaction.data);
       
       await arweave.transactions.post(transaction);
       if (response.status === 200) {
@@ -156,7 +157,7 @@
   </div>
     
   <label>Location</label>
-  <GooglePlacesAutocomplete apiKey="" bind:value={place}/>
+  <GooglePlacesAutocomplete apiKey="{googKey}" bind:value={place}/>
   <br>
 
   <label><b>Title</b></label>
