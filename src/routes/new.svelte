@@ -58,7 +58,7 @@
 
 
 	function saveToBlockchain(post) {
-    const arweave = Arweave.init();
+    const arweave = Arweave.init({ host: 'arweave.net', port: 443, protocol: 'https' });
     console.log(arweave);
 
     let key = privateKey; 
