@@ -158,7 +158,7 @@
   </div>
     
   <label>Location</label>
-  <GooglePlacesAutocomplete apiKey="{googApiKey}" bind:value={place}/>
+    <GooglePlacesAutocomplete apiKey="{googApiKey}" bind:value={place}/>
   <br>
 
   <label><b>Title</b></label>
