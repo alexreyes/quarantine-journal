@@ -1,52 +1,4 @@
 {
-<<<<<<< HEAD
-  "name": "quarantine-notes",
-  "description": "A way to store notes from the quarantine permanently",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "sapper dev",
-    "build": "sapper build --legacy",
-    "export": "sapper export --legacy",
-    "start": "node __sapper__/build",
-    "cy:run": "cypress run",
-    "cy:open": "cypress open",
-    "test": "run-p --race dev cy:run"
-  },
-  "dependencies": {
-    "@beyonk/svelte-googlemaps": "^2.2.0",
-    "arql-ops": "https://kybjhezuyftg.arweave.net/ITTPLYoxidZzAJP50FQ03QJUSkkh9iKHcmMcLZOvqtQ",
-    "arweave": "^1.6.0",
-    "bootstrap": "^4.4.1",
-    "compression": "^1.7.1",
-    "luxon": "^1.23.0",
-    "polka": "next",
-    "promises-tho": "^1.1.0",
-    "sapper-environment": "^1.0.1",
-    "sirv": "^0.4.0",
-    "svelte-dropzone": "^1.0.6"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/runtime": "^7.0.0",
-    "@rollup/plugin-commonjs": "^11.0.0",
-    "@rollup/plugin-json": "^4.0.2",
-    "@rollup/plugin-node-resolve": "^7.0.0",
-    "@rollup/plugin-replace": "^2.3.1",
-    "dotenv": "^8.2.0",
-    "npm-run-all": "^4.1.5",
-    "rollup": "^1.20.0",
-    "rollup-plugin-babel": "^4.0.2",
-    "rollup-plugin-svelte": "^5.0.1",
-    "rollup-plugin-terser": "^4.0.4",
-    "sapper": "^0.27.0",
-    "svelte": "^3.0.0",
-    "svelte-simple-modal": "^0.3.0"
-  }
-}
-=======
     "name": "quarantine-notes",
     "description": "A way to store notes from the quarantine permanently",
     "version": "0.0.1",
@@ -64,6 +16,7 @@
         "node": "12.x"
     },
     "dependencies": {
+        "@beyonk/async-script-loader": "^1.0.3",
         "arql-ops": "https://kybjhezuyftg.arweave.net/ITTPLYoxidZzAJP50FQ03QJUSkkh9iKHcmMcLZOvqtQ",
         "arweave": "^1.6.0",
         "bootstrap": "^4.4.1",
@@ -94,4 +47,3 @@
         "svelte-simple-modal": "^0.3.0"
     }
 }
->>>>>>> origin/master
