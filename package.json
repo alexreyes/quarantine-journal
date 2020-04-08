@@ -21,8 +21,10 @@
         "arweave": "^1.6.0",
         "bootstrap": "^4.4.1",
         "compression": "^1.7.1",
+        "jquery": "^1.9.1",
         "luxon": "^1.23.0",
         "polka": "next",
+        "popper.js": "^1.16.1",
         "promises-tho": "^1.1.0",
         "sirv": "^0.4.0",
         "svelte-dropzone": "^1.0.6"
