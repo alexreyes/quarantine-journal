@@ -105,9 +105,3 @@ export default {
 		onwarn,
 	}
 };
-
-then, just process.env.GOOGLE_KEY
-
-that's it :(
-
-and MAKE SURE .env IS IN THE ROOT DIRECTORY!!!
