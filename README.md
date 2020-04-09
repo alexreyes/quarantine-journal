@@ -1,5 +1,5 @@
 # Quarantine Journal 
 
-The source code behind the quarantine journal.
+The source code behind Quarantine Journal.
 
-quarantinejournal.xyz
+[quarantinejournal.xyz](https://quarantinejournal.xyz/)
