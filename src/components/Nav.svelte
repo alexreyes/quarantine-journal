@@ -1,6 +1,6 @@
   
 <script>
-	export let segment;
+	export var segment;
 	import { storedWalletAddress, storedWalletBalance, arweaveWallet } from './userContext.js';
 	import { fly } from 'svelte/transition';	
 	import { getContext } from 'svelte';
