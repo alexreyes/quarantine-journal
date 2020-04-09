@@ -21,10 +21,12 @@
         color: #808080; 
     }
     p {
-        font-size:120%
+        font-size:120%;
     }
     .postDesc {
+        padding-left: 1.2em; 
         white-space: pre-wrap;
+        text-align: left;
     }
 </style>
 
@@ -41,7 +43,7 @@
         {:else}
             <p>By: {postName}</p>
     {/if}
-    <hr width="70%">
+    <hr width="94%">
     <p class="postDesc"> {postDescription}</p>
 </div>
 </main>

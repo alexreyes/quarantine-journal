@@ -74,9 +74,9 @@
 					const myQuery = and(
 						equals('from', $storedWalletAddress),
 						equals('App-Name', 'QuarantineJournal'),
-						equals('TestData', 'true'),
-						equals('production', 'false'), 
-						equals('deployed', 'false')
+						equals('TestData', 'false'),
+						equals('production', 'true'), 
+						equals('deployed', 'true')
 					);
 							
 					const results = await arweave.arql(myQuery);
