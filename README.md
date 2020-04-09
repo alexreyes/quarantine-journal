@@ -1,2 +1,5 @@
-# perma-quarantine-journal-web
-Web 2.0 version of Quarantine Journal
+# Quarantine Journal 
+
+The source code behind the quarantine journal.
+
+quarantinejournal.xyz
