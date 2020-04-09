@@ -2,7 +2,7 @@
 	import { arweaveWallet, storedWalletAddress, submittedPost} from '../components/userContext.js';
   import { onMount } from 'svelte';
   import { goto } from '@sapper/app';
-  import privateKey from '../components/quarantine-journal-keyfile.json' 
+  // import privateKey from '../components/quarantine-journal-keyfile.json' 
   import { DateTime } from "luxon";
   import GooglePlacesAutocomplete from '../components/GooglePlacesAutocomplete.svelte'; 
 
@@ -17,6 +17,8 @@
   let isoDateTime; 
 
   let googApiKey = process.env.GOOGLE_KEY; 
+
+  let privateKey = ''; 
   
   const navigateAndSave = async () => {
     localStorage['submittedPost'] = 'true'; 
