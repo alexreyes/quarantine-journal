@@ -4,7 +4,7 @@
 yarn-error.log
 /cypress/screenshots/
 /__sapper__/
-/src/components/main-keyfile.json
+/src/components/quarantine-journal-keyfile.json
 
 .now
 .env
