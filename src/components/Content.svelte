@@ -1,6 +1,6 @@
 <script>
 	import { storedWalletAddress, storedWalletBalance, arweaveWallet, submittedPost} from './userContext.js';
-    // import privateKey from './quarantine-journal-keyfile.json'
+    import privateKey from './quarantine-journal-keyfile.json'
     import { onMount } from 'svelte';
     import { and, equals } from 'arql-ops';
 	import Box from './Box.svelte'; 
@@ -15,7 +15,7 @@
 	};
 
 	let posts = []; 
-	let privateKey = '';
+	
     onMount(async () => {
 		login().then(function() {
 			const getPostsWithRetries = retryWithBackoff(getPosts)
