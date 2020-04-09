@@ -1,7 +1,8 @@
 {
-    "name": "quarantine-notes",
-    "description": "A way to store notes from the quarantine permanently",
-    "version": "0.0.1",
+    "name": "quarantine-journal",
+    "license": "MIT license",
+    "description": "A way to store journal entries from the quarantine permanently",
+    "version": "1.0.0",
     "scripts": {
         "dev": "sapper dev",
         "build": "ls && sapper build",
@@ -48,5 +49,9 @@
         "sapper": "^0.27.0",
         "svelte": "^3.0.0",
         "svelte-simple-modal": "^0.3.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://https://github.com/alexreyes/quarantine-journal-web.git"
     }
 }

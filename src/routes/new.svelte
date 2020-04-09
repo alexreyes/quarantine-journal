@@ -51,13 +51,13 @@
 
     saveToBlockchain(newPost);
 
+    return 1; 
     title = ''; 
     description = ''; 
     socialLink = ''; 
     name = ''; 
     location = '';
   }
-
 
 	function saveToBlockchain(post) {
     const arweave = Arweave.init({ host: 'arweave.net', port: 443, protocol: 'https' });
@@ -81,10 +81,11 @@
           data: JSON.stringify(post),
       }, key);
       
-      transaction.addTag('App-Name', 'QuarantineNotes')
-      transaction.addTag('App-Version', '0.0.1')
+      transaction.addTag('App-Name', 'QuarantineJournal')
+      transaction.addTag('App-Version', '1.0.0')
       transaction.addTag('TestData', 'true')
       transaction.addTag('production', 'false')
+      transaction.addTag('deployed', 'false')            
       transaction.addTag('ISO-Time', isoDateTime)
       transaction.addTag('loc-lat', place.geometry.location.lat())
       transaction.addTag('loc-long', place.geometry.location.lng())
@@ -96,9 +97,8 @@
 
       localStorage['transactionId'] = transaction.id;
 
-      console.log(transaction.id);
-      // console.log(transaction.data);
-      
+      console.log("TransactionID: ", transaction.id);
+
       await arweave.transactions.post(transaction);
       if (response.status === 200) {
           navigateAndSave();
@@ -141,31 +141,31 @@
 <h1>new entry</h1>
 
 <div class="alert alert-info" role="alert">
-    Note: All entries stored on the <a href="https://www.arweave.org/" target="_blank" class="alert-link">arweave blockchain</a> are permanent, un-editable, un-deleteable, and public. 
+    <b><i>Your experiences matter.</i></b> All entries are permanent, un-editable, un-deleteable, and public. 
 </div>
 
 <form on:submit|preventDefault="{addPost}">
   <div class="form-row">
     <div class = "theName col"> 
-        <label>Name</label>
-        <input type="text" class="form-control" id="name" bind:value={name} placeholder="Who wrote this?" required/> 
+        <label><b>Name</b></label>
+        <input type="text" class="form-control" id="name" bind:value={name} placeholder="Name (or username)" required/> 
     </div>
 
     <div class = "socialLink col "> 
-        <label >Your social media link</label>
+        <label >Social links</label>
         <input type="text" class="form-control" id="socialLink" bind:value={socialLink} placeholder="Plug your social media"/> 
     </div>
   </div>
     
-  <label>Location</label>
+  <label><b>Location</b></label>
     <GooglePlacesAutocomplete apiKey="{googApiKey}" bind:value={place}/>
   <br>
 
   <label><b>Title</b></label>
-  <input type="text" class="form-control" id="title"  maxlength="140" bind:value = {title} placeholder="Enter a title" required/> 
+  <input type="text" class="form-control" id="title"  maxlength="140" bind:value = {title} placeholder="Title your entry" required/> 
   <br>
   <label><b>Description</b></label>
-  <textarea rows="3" class="form-control" id="description" maxlength="10000" bind:value ={description}  placeholder="Write the body of your entry" required/>
+  <textarea rows="10" class="form-control" id="description" maxlength="10000" bind:value ={description}  placeholder="Write the body of your entry and share your quarantine experience!" required/>
   
-  <button type="submit" class="btn btn-outline-primary">Submit post</button>
+  <button type="submit" class="btn btn-outline-primary">Submit entry</button>
 </form>

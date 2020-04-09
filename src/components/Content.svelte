@@ -2,7 +2,7 @@
 	import { storedWalletAddress, storedWalletBalance, arweaveWallet, submittedPost} from './userContext.js';
     import privateKey from './testKeyfile.json'
     import { onMount } from 'svelte';
-    import { and, or, equals } from 'arql-ops';
+    import { and, equals } from 'arql-ops';
 	import Box from './Box.svelte'; 
 	import PopupMessage from './PopupMessage.svelte'; 
 	import { getContext } from 'svelte';
@@ -24,7 +24,6 @@
 		});
 
 		var postPopup = localStorage['submittedPost'] || 'false';
-		console.log("Popup: ", postPopup); 
 
 		if (postPopup === 'true') {
 			localStorage['submittedPost'] = 'false'; 
@@ -46,13 +45,15 @@
 				arweave.wallets.jwkToAddress(wallet).then((address) => {
 					let walletAddress = address;
 					storedWalletAddress.set(walletAddress);
+					
+					console.log("Address: ", walletAddress);
 
 					arweave.wallets.getBalance(address).then((balance) => {
 						let winston = balance;
 						let arBalance = arweave.ar.winstonToAr(balance);
 
 						storedWalletBalance.set(arBalance);
-						console.log("end of login");
+
 						resolve("logged in");
 					});
 				});
@@ -65,8 +66,6 @@
     };
 
     function getPosts() {
-		console.log("get posts called")
-
 		return new Promise(function(resolve, reject) {
 			try {
 				(async () => {
@@ -74,15 +73,14 @@
 
 					const myQuery = and(
 						equals('from', $storedWalletAddress),
-						equals('App-Name', 'QuarantineNotes'),
+						equals('App-Name', 'QuarantineJournal'),
 						equals('TestData', 'true'),
-						equals('production', 'false'),
-						or(
-							equals('App-Version', '0.0.1'),
-						)
+						equals('production', 'false'), 
+						equals('deployed', 'false')
 					);
 							
 					const results = await arweave.arql(myQuery);
+					console.log(results); 
 
 					// If arql returns an empty array, it's gonna need a retry 
 					if (results.length === 0) { throw new Error('No results') }
@@ -160,7 +158,7 @@
 <main>
 	<div class = "titleStuff">
 		<h1>Quarantine Journal</h1>
-		<p class = "history">Write your quarantine stories and save them permanently</p>
+		<p class = "history">Write your quarantine experiences and save them permanently</p>
 	</div>
 	<section>
         {#each posts as post}

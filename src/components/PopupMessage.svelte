@@ -3,8 +3,8 @@
 
 	const shareData = {
 		title: 'Quarantine Journal',
-		text: 'I just made a permanent note from the quarantine! Click this link to check out the site.',
-		url: 'https://quaratine-notes.arweave.xyz/',
+		text: 'I just made a permanent journal entry from the quarantine on Quarantine Journal!',
+		url: 'https://https://quarantinejournal.xyz/'
 	}
 
 	function isMobileDevice() {
@@ -71,19 +71,18 @@
 
 <br>
 <h2>Where's my post?</h2>
-<p>Your post is being saved to the blockchain, where it’ll be stored permanently. That's right, you just wrote to the blockchain!</p>
-<p>Your post will be on the front page for all to see in a couple of minutes.</p>
+<p>Your post is on the front page, and it's also saved to the blockchain, where it’ll be stored permanently. That's right, you just wrote to the blockchain!</p>
 
 <h2>View on the blockchain</h2>
 
 <p>Your post is being stored on the blockchain! <a href = {transactionLink} target="_blank">Here's the block link</a></p>
 <p>The block will be viewable in a couple of minutes.</p>
 
-<h2>Share</h2>
+<h2>Share Quarantine Journal</h2>
 {#if !mobile}
 		<ul class="list-inline">
 			<li>
-				<div class="fb-share-button" data-href="https://quaratine-notes.arweave.xyz/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fquaratine-notes.arweave.xyz%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+				<div class="fb-share-button" data-href="https://quarantinejournal.xyz/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fquaratine-notes.arweave.xyz%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 			</li>
 			<li>
 				<a class="twitter-share-button" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fquaratine-notes.arweave.xyz%2F&text=Just%20made%20a%20permanent%20note%20about%20my%20quarantine%20experience%20on%20quarantine%20notes%21"> Tweet</a>

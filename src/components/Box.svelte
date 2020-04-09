@@ -23,6 +23,9 @@
     p {
         font-size:120%
     }
+    .postDesc {
+        white-space: pre-wrap;
+    }
 </style>
 
 <head>
@@ -38,6 +41,7 @@
         {:else}
             <p>By: {postName}</p>
     {/if}
-    <p> {postDescription}</p>
+    <hr width="70%">
+    <p class="postDesc"> {postDescription}</p>
 </div>
 </main>
