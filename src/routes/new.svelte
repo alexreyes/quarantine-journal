@@ -95,8 +95,8 @@
       
       transaction.addTag('App-Name', 'QuarantineJournal')
       transaction.addTag('App-Version', '1.0.0')
-      transaction.addTag('TestData', 'true')
-      transaction.addTag('production', 'false')
+      transaction.addTag('TestData', 'false')
+      transaction.addTag('production', 'true')
       transaction.addTag('deployed', 'true')            
       transaction.addTag('ISO-Time', isoDateTime)
       transaction.addTag('loc-lat', place.geometry.location.lat())
