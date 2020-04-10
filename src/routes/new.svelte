@@ -1,6 +1,6 @@
 <script>
 	import { arweaveWallet, storedWalletAddress, submittedPost} from '../components/userContext.js';
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { goto } from '@sapper/app';
   import privateKey from '../components/quarantine-journal-keyfile.json' 
   import { DateTime } from "luxon";
@@ -15,14 +15,26 @@
   let name = ''; 
   let place = ''; 
   let isoDateTime; 
-
+  let submitDisabled = true; 
   let googApiKey = process.env.GOOGLE_KEY; 
-  
+  let recaptchaKey = process.env.RECAPTCHA; 
+
   const navigateAndSave = async () => {
     localStorage['submittedPost'] = 'true'; 
     await goto('.');
   }
-  
+  function verifyUser() {
+    submitDisabled = false; 
+  }
+
+  onMount(() => {
+    window.verifyUser = verifyUser;
+  })
+
+  onDestroy(() => {
+    window.verifyUser = null;
+  })
+
   function addPost(){
     console.log("submit clicked"); 
 
@@ -136,6 +148,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/luxon@1.23.0/build/global/luxon.min.js"></script>
 
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137191118-2"></script>
     <script>
@@ -177,5 +191,12 @@
   <label><b>Description</b></label>
   <textarea rows="10" class="form-control" id="description" maxlength="10000" bind:value ={description}  placeholder="Write the body of your entry and share your quarantine experience!" required/>
   
-  <button type="submit" class="btn btn-outline-primary">Submit entry</button>
+  <br>
+  <form action="?" method="POST">
+    <div class="g-recaptcha" 
+    data-sitekey="{recaptchaKey}"
+    data-callback="verifyUser"></div>
+  </form>
+  <button type="submit" class="btn btn-outline-primary" disabled={submitDisabled}>Submit entry</button>
+
 </form>

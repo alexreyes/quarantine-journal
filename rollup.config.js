@@ -4,10 +4,10 @@ import svelte from 'rollup-plugin-svelte';
 import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
-import pkg from './package.json';
 import json from '@rollup/plugin-json';
 import replace from '@rollup/plugin-replace';
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
+import pkg from './package.json';
 
 dotenv.config();
 
@@ -25,6 +25,7 @@ export default {
 			replace({
 			  "process.browser": true,
 			  "process.env.GOOGLE_KEY": JSON.stringify(process.env.GOOGLE_KEY),
+			  "process.env.RECAPTCHA": JSON.stringify(process.env.RECAPTCHA),
 			  "process.env.NODE_ENV": JSON.stringify(mode),
 			}),
 			svelte({
