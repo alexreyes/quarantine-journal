@@ -1,5 +1,5 @@
 <script>
-	export let message;
+	export var message;
 
 	const shareData = {
 		title: 'Quarantine Journal',
