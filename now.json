@@ -8,11 +8,13 @@
         "lhr"
     ],
     "env": {
-        "GOOGLE_KEY": "@google_key"
+        "GOOGLE_KEY": "@google_key", 
+        "RECAPTCHA" : "@recaptcha"
     },
     "build": {
         "env": {
-            "GOOGLE_KEY": "@google_key"
+            "GOOGLE_KEY": "@google_key", 
+            "RECAPTCHA" : "@recaptcha"
         }
     }
 }
