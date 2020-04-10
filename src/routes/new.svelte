@@ -24,6 +24,7 @@
     await goto('.');
   }
   function verifyUser() {
+    console.log("RECAP KEY", recaptchaKey); 
     submitDisabled = false; 
   }
 
