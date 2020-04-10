@@ -4,7 +4,7 @@
 	const shareData = {
 		title: 'Quarantine Journal',
 		text: 'I just made a permanent journal entry from the quarantine on Quarantine Journal!',
-		url: 'https://https://quarantinejournal.xyz/'
+		url: 'https://quarantinejournal.xyz/'
 	}
 
 	function isMobileDevice() {
