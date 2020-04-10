@@ -28,9 +28,6 @@
   }
 
   onMount(() => {
-    console.log("google api key, ", googApiKey); 
-    console.log("recaptcha api key, ", recaptchaKey); 
-
     window.verifyUser = verifyUser;
   })
 
