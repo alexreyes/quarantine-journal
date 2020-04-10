@@ -128,9 +128,9 @@
 	}
 
 	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
+		/* text-transform: uppercase;	 */
+		color: #FF4500;
+		font-size: 5em;
 		font-weight: 100;
 	}
 	.titleStuff {
