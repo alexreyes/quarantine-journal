@@ -86,7 +86,7 @@
 			</li>
 			<li>
 				<a class="twitter-share-button" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fquaratinejournal.xyz%2F&text=Just%20made%20a%20permanent%20note%20about%20my%20quarantine%20experience%20on%20quarantine%20notes%21"> Tweet</a>
-			</li>
+			</li>~
 		</ul>
 	{:else}
 		<button on:click="{shareButton}" class="btn btn-primary">Share</button>
