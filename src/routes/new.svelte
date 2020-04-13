@@ -64,16 +64,17 @@
     };
 
     console.log(newPost);
+
     localStorage['post'] = JSON.stringify(post);
     console.log("Saving post to cache: ", JSON.stringify(post));  
 
-    const resp = await fetch('/api/save_to_blockchain', 
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    ); 
+    // fetch('/api/saveToBlockchain', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(post),
+    // })
 
     if (resp.status === 200) {
       const result = await resp.body.json();
@@ -83,8 +84,7 @@
       alert(`There was a problem saving :( ${resp.status}`)
     }
 
-    // ??
-    return 1; 
+    // Reset inputs to default (empty) on form
     title = ''; 
     description = ''; 
     socialLink = ''; 

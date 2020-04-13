@@ -74,8 +74,8 @@
 					const myQuery = and(
 						equals('from', $storedWalletAddress),
 						equals('App-Name', 'QuarantineJournal'),
-						equals('TestData', 'false'),
-						equals('production', 'true'), 
+						equals('TestData', 'true'),
+						equals('production', 'false'), 
 						equals('deployed', 'true')
 					);
 
