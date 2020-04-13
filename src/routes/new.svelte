@@ -2,7 +2,6 @@
 	import { arweaveWallet, storedWalletAddress, submittedPost} from '../components/userContext.js';
   import { onMount, onDestroy } from 'svelte';
   import { goto } from '@sapper/app';
-  import privateKey from '../components/quarantine-journal-keyfile.json' 
   import { DateTime } from "luxon";
   import GooglePlacesAutocomplete from '../components/GooglePlacesAutocomplete.svelte'; 
 
@@ -79,14 +78,11 @@
     if (resp.status === 200) {
       const result = await resp.text(); 
 
-      console.log("RESULT: ", result); 
-      return 0; 
       localStorage['transactionId'] = result.transactionId;
       navigateAndSave();
     } else {
-      console.log(`There was a problem saving :( ${resp.status}`); 
-      return 0; 
-      // alert(`There was a problem saving :( ${resp.status}`)
+      // console.log(`There was a problem saving :( ${resp.status}`); 
+      alert(`There was a problem saving :( ${resp.status}`)
     }
 
     // Reset inputs to default (empty) on form
@@ -96,7 +92,6 @@
     name = ''; 
     location = '';
   }
-
 	
 </script>
 
@@ -116,7 +111,6 @@
 </style>
 <svelte:head>
     <title>New entry</title>
-    <script src="https://unpkg.com/arweave/bundles/web.bundle.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/luxon@1.23.0/build/global/luxon.min.js"></script>
 

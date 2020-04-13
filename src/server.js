@@ -3,10 +3,10 @@ import polka from 'polka';
 import compression from 'compression';
 import * as sapper from '@sapper/server';
 import { saveToBlockchain } from './api/post-journal';
-
+import { loginAndGetPosts } from './api/get-entries';
 const { PORT, NODE_ENV } = process.env;
-const { json } = require('body-parser');
 const dev = NODE_ENV === 'development';
+const { json } = require('body-parser');
 
 const app = polka()
   .use(json())
@@ -18,16 +18,27 @@ const app = polka()
     res.end(JSON.stringify({ hello: 'world' }));
   })
   .post('/api/save_to_blockchain', async (req, res) => {
-    const post = JSON.stringify(req.body);
+    const post = req.body;
 
     try {
       const result = await saveToBlockchain(post);
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(result));
     } catch (e) {
-      console.log("SERVER ERROR: ", e);
+      console.error(e);
       res.writeHead(500);
-      res.end('Server Error', e);
+      res.end(`Server Error: ${e.message}\n${e.stack}`);
+    }
+  })
+  .get('/api/read_from_blockchain', async (req, res) => {
+    try {
+      const result = await loginAndGetPosts();
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(result));
+    } catch (e) {
+      console.error(e);
+      res.writeHead(500);
+      res.end(`Server Error: ${e.message}\n${e.stack}`);
     }
   })
   .use(

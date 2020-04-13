@@ -3,7 +3,7 @@ const Arweave = require('arweave/node');
 const arweave = Arweave.init({ host: 'arweave.net', port: 443, protocol: 'https' });
 
 // grab the wallet from secrets/env
-const wallet = process.env.WALLET_JSON;
+const wallet = JSON.parse(process.env.WALLET_JSON);
 
 export async function saveToBlockchain(post) {
   const transaction = await arweave.createTransaction({
