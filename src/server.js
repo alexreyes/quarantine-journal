@@ -18,7 +18,7 @@ const app =
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ hello: 'world' }));
     })
-    .post('/api/save_to_blockchain', (req, res) => {
+    .post('/api/save_to_blockchain', async(req, res) => {
         const post = req.body;
         try {
             const result = await saveToBlockchain(post);
