@@ -1,11 +1,10 @@
-import Arweave from 'arweave/node';
+const Arweave = require('arweave/node');
 
 const arweave = Arweave.init({ host: 'arweave.net', port: 443, protocol: 'https' });
 
 // grab the wallet from secrets/env
-const wallet = JSON.parse(process.env.WALLET_JSON);
+const wallet = process.env.WALLET_JSON;
 
-// eslint-disable-next-line import/prefer-default-export
 export async function saveToBlockchain(post) {
   const transaction = await arweave.createTransaction({
     data: JSON.stringify(post),
@@ -30,3 +29,5 @@ export async function saveToBlockchain(post) {
   console.error(`Error posting to Arweave, ${response.status}`);
   throw new Error(`Error posting ${response.status}`);
 }
+
+export default saveToBlockchain;

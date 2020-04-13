@@ -65,23 +65,28 @@
 
     console.log(newPost);
 
-    localStorage['post'] = JSON.stringify(post);
-    console.log("Saving post to cache: ", JSON.stringify(post));  
+    localStorage['post'] = JSON.stringify(newPost);
+    console.log("Saving post to cache: ", JSON.stringify(newPost));  
 
-    // fetch('/api/saveToBlockchain', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(post),
-    // })
-
+    const resp = await fetch('/api/save_to_blockchain', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify(newPost),
+    })
+    
     if (resp.status === 200) {
-      const result = await resp.body.json();
+      const result = await resp.text(); 
+
+      console.log("RESULT: ", result); 
+      return 0; 
       localStorage['transactionId'] = result.transactionId;
       navigateAndSave();
     } else {
-      alert(`There was a problem saving :( ${resp.status}`)
+      console.log(`There was a problem saving :( ${resp.status}`); 
+      return 0; 
+      // alert(`There was a problem saving :( ${resp.status}`)
     }
 
     // Reset inputs to default (empty) on form
@@ -159,11 +164,11 @@
   <textarea rows="10" class="form-control" id="description" maxlength="10000" bind:value ={description}  placeholder="Write the body of your entry and share your quarantine experience!" required/>
   
   <br>
-  <form action="?" method="POST">
+  <!-- <form action="?" method="POST">
     <div class="g-recaptcha" 
     data-sitekey="{recaptchaKey}"
     data-callback="verifyUser"></div>
-  </form>
-  <button type="submit" class="btn btn-outline-primary" disabled={submitDisabled}>Submit entry</button>
+  </form> -->
+  <button type="submit" class="btn btn-outline-primary">Submit entry</button>
 
 </form>

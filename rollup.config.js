@@ -26,6 +26,7 @@ export default {
 			  "process.browser": true,
 			  "process.env.GOOGLE_KEY": JSON.stringify(process.env.GOOGLE_KEY),
 			  "process.env.RECAPTCHA": JSON.stringify(process.env.RECAPTCHA),
+			  "process.env.WALLET_JSON": JSON.stringify(process.env.WALLET_JSON),
 			  "process.env.NODE_ENV": JSON.stringify(mode),
 			}),
 			svelte({
