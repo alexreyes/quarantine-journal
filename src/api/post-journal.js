@@ -15,6 +15,7 @@ export async function saveToBlockchain(post) {
   transaction.addTag('TestData', 'true');
   transaction.addTag('production', 'false');
   transaction.addTag('deployed', 'true');
+  transaction.addTag('fixedMalformed', 'true');
   transaction.addTag('ISO-Time', post.isoDateTime);
   transaction.addTag('loc-lat', post.locLat);
   transaction.addTag('loc-long', post.locLong);

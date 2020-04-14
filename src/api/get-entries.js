@@ -10,11 +10,12 @@ const wallet = JSON.parse(process.env.WALLET_JSON);
 
 let posts = []; 
 let walletAddress = ''; 
+let lastOne;
 
 function login() {
   return new Promise(function (resolve, reject) {
     try {
-      console.log("signing in....");
+      console.log("signing in...");
 
       arweave.wallets.jwkToAddress(wallet).then((address) => {
         walletAddress = address;
@@ -42,11 +43,11 @@ function getPosts() {
           equals('App-Name', 'QuarantineJournal'),
           equals('TestData', 'true'),
           equals('production', 'false'),
+          equals('fixedMalformed', 'true'),
           equals('deployed', 'true')
         );
 
         const results = await arweave.arql(myQuery);
-        console.log("Results: ", results);
 
         // If arql returns an empty array, it's gonna need a retry 
         if (results.length === 0) { throw new Error('No results') }
@@ -57,17 +58,13 @@ function getPosts() {
 
             let returnedJson = blockchainTransaction.get('data', { decode: true, string: true });
 
-            posts = posts.concat(JSON.parse(returnedJson)); // add returned posts to the view
-
-            // Get tags
-            blockchainTransaction.get('tags').forEach(tag => {
-              let key = tag.get('name', { decode: true, string: true });
-              let value = tag.get('value', { decode: true, string: true });
-            });
+            posts = posts.concat(returnedJson); // add returned posts to the view
+            console.log("LAST RETRIEVED: ", returnedJson);
+            lastOne = returnedJson; 
           });
         }
-
         resolve("get posts worked");
+        console.log("RESOLVEDDDD");
       })()
     }
     catch (exception) {
@@ -81,9 +78,10 @@ export function loginAndGetPosts() {
     const getPostsWithRetries = retryWithBackoff(getPosts)
 
     getPostsWithRetries();
+    // return lastOne;
+  }); 
+  console.log("HERE: ", lastOne);
 
-    return posts; 
-  });
 }
 
 export default loginAndGetPosts;
