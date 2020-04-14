@@ -16,6 +16,7 @@
 
 	let posts = []; 
 	
+	
     onMount(async () => {
 		login().then(function() {
 			const getPostsWithRetries = retryWithBackoff(getPosts)
