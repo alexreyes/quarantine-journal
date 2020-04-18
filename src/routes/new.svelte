@@ -35,7 +35,7 @@
     window.verifyUser = null;
   })
 
-  function addPost(){
+  async function addPost(){
     console.log("submit clicked"); 
 
     var dt = DateTime.local();
@@ -57,12 +57,33 @@
       socialLink: socialLink,
       description: description,
       currDate: currDate,
-      location: place.formatted_address
+      location: place.formatted_address,
+      isoDateTime: isoDateTime, 
+      locLat: place.geometry.location.lat(),
+      locLong:  place.geometry.location.lng()
     };
+
     console.log(newPost);
+    localStorage['post'] = JSON.stringify(post);
+    console.log("Saving post to cache: ", JSON.stringify(post));  
 
-    saveToBlockchain(newPost);
+    const resp = await fetch('/api/save_to_blockchain', 
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    ); 
 
+    if (resp.status === 200) {
+      const result = await resp.body.json();
+      localStorage['transactionId'] = result.transactionId;
+      navigateAndSave();
+    } else {
+      alert(`There was a problem saving :( ${resp.status}`)
+    }
+
+    // ??
     return 1; 
     title = ''; 
     description = ''; 
@@ -71,61 +92,7 @@
     location = '';
   }
 
-	function saveToBlockchain(post) {
-    const arweave = Arweave.init({ host: 'arweave.net', port: 443, protocol: 'https' });
-    console.log(arweave);
-
-    let key = privateKey; 
-
-    (async () => {
-      var unixTime = Math.round((new Date()).getTime() / 1000)
-
-      arweave.wallets.jwkToAddress(key).then((address) => {
-          arweave.wallets.getBalance(address).then((balance) => {
-              let winston = balance;
-              console.log(winston);
-          });
-      });
-      localStorage['post'] = JSON.stringify(post);
-      console.log("Saving post to cache: ", JSON.stringify(post));  
-
-      let transaction = await arweave.createTransaction({
-          data: JSON.stringify(post),
-      }, key);
-      
-      transaction.addTag('App-Name', 'QuarantineJournal')
-      transaction.addTag('App-Version', '1.0.0')
-      transaction.addTag('TestData', 'false')
-      transaction.addTag('production', 'true')
-      transaction.addTag('deployed', 'true')            
-      transaction.addTag('ISO-Time', isoDateTime)
-      transaction.addTag('loc-lat', place.geometry.location.lat())
-      transaction.addTag('loc-long', place.geometry.location.lng())
-
-      await arweave.transactions.sign(transaction, key);
-      const response = await arweave.transactions.post(transaction);
-      
-      console.log("Status: ", response.status);
-
-      localStorage['transactionId'] = transaction.id;
-
-      console.log("TransactionID: ", transaction.id);
-
-      await arweave.transactions.post(transaction);
-      if (response.status === 200) {
-          navigateAndSave();
-      }
-      if (response.status == 400) {
-          alert("400: The transaction is invalid, couldn't be verified, or the wallet does not have suffucuent funds.")
-      }
-      if (response.status == 429) {
-          alert("429: The request has exceeded the clients rate limit quota.")
-      }
-      if (response.status == 503) {
-          alert("503: The nodes was unable to verify the transaction.")
-      }
-    })()
-  }
+	
 </script>
 
 <style>
